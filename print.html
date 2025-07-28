@@ -1,0 +1,1024 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>eww documentation</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="eww.html">Eww - Widgets for everyone!</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Eww expressions</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">Theming with GTK</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">eww documentation</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/byson94/ewwii/tree/master/docs" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="eww---widgets-for-everyone"><a class="header" href="#eww---widgets-for-everyone">Eww - Widgets for everyone!</a></h1>
+<p>Ewwii (ElKowar's Wacky Widgets improved interface, pronounced with sufficient amounts of disgust)
+is a widget system made in <a href="https://www.rust-lang.org/">Rust</a>,
+which lets you create your own widgets similarly to how you can in AwesomeWM.
+The key difference: It is independent of your window manager!</p>
+<p>Configured in yuck and themed using CSS, it is easy to customize and provides all the flexibility you need!</p>
+<h2 id="how-to-install-eww"><a class="header" href="#how-to-install-eww">How to install Eww</a></h2>
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<ul>
+<li>rustc</li>
+<li>cargo</li>
+</ul>
+<p>Rather than with your system package manager,
+I <strong>strongly</strong> recommend installing it using <a href="https://rustup.rs/">rustup</a>.</p>
+<p>Additionally, eww requires some dynamic libraries to be available on your system.
+The exact names of the packages that provide these may differ depending on your distribution.
+The following list of package names should work for arch linux:</p>
+<details>
+<summary>Packages</summary>
+<ul>
+<li>gtk3 (libgdk-3, libgtk-3)</li>
+<li>gtk-layer-shell (only on Wayland)</li>
+<li>pango (libpango)</li>
+<li>gdk-pixbuf2 (libgdk_pixbuf-2)</li>
+<li>libdbusmenu-gtk3</li>
+<li>cairo (libcairo, libcairo-gobject)</li>
+<li>glib2 (libgio, libglib-2, libgobject-2)</li>
+<li>gcc-libs (libgcc)</li>
+<li>glibc</li>
+</ul>
+</details>
+<p>(Note that you will most likely need the -devel variants of your distro's packages to be able to compile eww.)</p>
+<h3 id="building"><a class="header" href="#building">Building</a></h3>
+<p>Once you have the prerequisites ready, you're ready to install and build eww.</p>
+<p>First clone the repo:</p>
+<pre><code class="language-bash">git clone https://github.com/byson94/ewwii
+</code></pre>
+<pre><code class="language-bash">cd ewwii
+</code></pre>
+<p>Then build:</p>
+<pre><code class="language-bash">cargo build --release --no-default-features --features x11
+</code></pre>
+<p><strong>NOTE:</strong>
+When you're on Wayland, build with:</p>
+<pre><code class="language-bash">cargo build --release --no-default-features --features=wayland
+</code></pre>
+<h3 id="running-eww"><a class="header" href="#running-eww">Running eww</a></h3>
+<p>Once you've built it you can now run it by entering:</p>
+<pre><code class="language-bash">cd target/release
+</code></pre>
+<p>Then make the Eww binary executable:</p>
+<pre><code class="language-bash">chmod +x ./ewwii
+</code></pre>
+<p>Then to run it, enter:</p>
+<pre><code>./ewwii daemon
+./ewwii open &lt;window_name&gt;
+</code></pre>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="writing-your-eww-configuration"><a class="header" href="#writing-your-eww-configuration">Writing your eww configuration</a></h1>
+<p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>),  see <a href="widgets.html">Widget Documentation</a>.)<br />
+Eww is configured using its own language called <code>yuck</code>.
+Using yuck, you declare the structure and content of your widgets, the geometry, position, and behavior of any windows,
+as well as any state and data that will be used in your widgets.
+Yuck is based around S-expressions, which you may know from lisp-like languages.
+If you're using vim, you can make use of <a href="https://github.com/elkowar/yuck.vim">yuck.vim</a> for editor support.
+If you're using VSCode, you can get syntax highlighting and formatting from <a href="https://marketplace.visualstudio.com/items?itemName=eww-yuck.yuck">yuck-vscode</a>.
+It is also recommended to use <a href="https://shaunlebron.github.io/parinfer/">parinfer</a>,
+which makes working with S-expressions delightfully easy!</p>
+<p>Additionally, any styles are defined in CSS or SCSS (which is mostly just slightly improved CSS syntax).
+While eww supports a significant portion of the CSS you know from the web,
+not everything is supported, as eww relies on GTK's own CSS engine.
+Notably, some animation features are unsupported,
+as well as most layout-related CSS properties such as flexbox, <code>float</code>, absolute position or <code>width</code>/<code>height</code>.</p>
+<p>To get started, you'll need to create two files: <code>eww.yuck</code> and <code>eww.scss</code> (or <code>eww.css</code>, if you prefer).
+These files must be placed under <code>$XDG_CONFIG_HOME/eww</code> (this is most likely <code>~/.config/eww</code>).</p>
+<p>Now that those files are created, you can start writing your first widget!</p>
+<h2 id="creating-your-first-window"><a class="header" href="#creating-your-first-window">Creating your first window</a></h2>
+<p>Firstly, you will need to create a top-level window. Here, you configure things such as the name, position, geometry, and content of your window.</p>
+<p>Let's look at an example window definition:</p>
+<pre><code class="language-lisp">(defwindow example
+           :monitor 0
+           :geometry (geometry :x &quot;0%&quot;
+                               :y &quot;20px&quot;
+                               :width &quot;90%&quot;
+                               :height &quot;30px&quot;
+                               :anchor &quot;top center&quot;)
+           :stacking &quot;fg&quot;
+           :reserve (struts :distance &quot;40px&quot; :side &quot;top&quot;)
+           :windowtype &quot;dock&quot;
+           :wm-ignore false
+  &quot;example content&quot;)
+</code></pre>
+<p>Here, we are defining a window named <code>example</code>, which we then define a set of properties for. Additionally, we set the content of the window to be the text <code>&quot;example content&quot;</code>.</p>
+<p>You can now open your first window by running <code>eww open example</code>! Glorious!</p>
+<h3 id="defwindow-properties"><a class="header" href="#defwindow-properties"><code>defwindow</code>-properties</a></h3>
+<table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
+<tr><td align="right"><code>monitor</code></td><td>Which monitor this window should be displayed on. See below for details.</td></tr>
+<tr><td align="right"><code>geometry</code></td><td>Geometry of the window.</td></tr>
+</tbody></table>
+<p><strong><code>monitor</code>-property</strong></p>
+<p>This field can be:</p>
+<ul>
+<li>the string <code>&lt;primary&gt;</code>, in which case eww tries to identify the primary display (which may fail, especially on wayland)</li>
+<li>an integer, declaring the monitor index</li>
+<li>the name of the monitor</li>
+<li>a string containing a JSON-array of monitor matchers, such as: <code>'[&quot;&lt;primary&gt;&quot;, &quot;HDMI-A-1&quot;, &quot;PHL 345B1C&quot;, 0]'</code>. Eww will try to find a match in order, allowing you to specify fallbacks.</li>
+</ul>
+<p><strong><code>geometry</code>-properties</strong></p>
+<table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
+<tr><td align="right"><code>x</code>, <code>y</code></td><td>Position of the window. Values may be provided in <code>px</code> or <code>%</code>. Will be relative to <code>anchor</code>.</td></tr>
+<tr><td align="right"><code>width</code>, <code>height</code></td><td>Width and height of the window. Values may be provided in <code>px</code> or <code>%</code>.</td></tr>
+<tr><td align="right"><code>anchor</code></td><td>Anchor-point of the window. Either <code>center</code> or combinations of <code>top</code>, <code>center</code>, <code>bottom</code> and <code>left</code>, <code>center</code>, <code>right</code>.</td></tr>
+</tbody></table>
+<br/>
+Depending on if you are using X11 or Wayland, some additional properties exist:
+<h4 id="x11"><a class="header" href="#x11">X11</a></h4>
+<table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
+<tr><td align="right"><code>stacking</code></td><td>Where the window should appear in the stack. Possible values: <code>fg</code>, <code>bg</code>.</td></tr>
+<tr><td align="right"><code>wm-ignore</code></td><td>Whether the window manager should ignore this window. This is useful for dashboard-style widgets that don't need to interact with other windows at all. Note that this makes some of the other properties not have any effect. Either <code>true</code> or <code>false</code>.</td></tr>
+<tr><td align="right"><code>reserve</code></td><td>Specify how the window manager should make space for your window. This is useful for bars, which should not overlap any other windows.</td></tr>
+<tr><td align="right"><code>windowtype</code></td><td>Specify what type of window this is. This will be used by your window manager to determine how it should handle your window. Possible values: <code>normal</code>, <code>dock</code>, <code>toolbar</code>, <code>dialog</code>, <code>desktop</code>. Default: <code>dock</code> if <code>reserve</code> is specified, <code>normal</code> otherwise.</td></tr>
+</tbody></table>
+<h4 id="wayland"><a class="header" href="#wayland">Wayland</a></h4>
+<table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
+<tr><td align="right"><code>stacking</code></td><td>Where the window should appear in the stack. Possible values: <code>fg</code>, <code>bg</code>, <code>overlay</code>, <code>bottom</code>.</td></tr>
+<tr><td align="right"><code>exclusive</code></td><td>Whether the compositor should reserve space for the window automatically. Either <code>true</code> or <code>false</code>. If <code>true</code> <code>:anchor</code> has to include <code>center</code>.</td></tr>
+<tr><td align="right"><code>focusable</code></td><td>Whether the window should be able to be focused. This is necessary for any widgets that use the keyboard to work. Possible values: <code>none</code>, <code>exclusive</code> and <code>ondemand</code>.</td></tr>
+<tr><td align="right"><code>namespace</code></td><td>Set the wayland layersurface namespace eww uses. Accepts a <code>string</code> value.</td></tr>
+</tbody></table>
+<h2 id="your-first-widget"><a class="header" href="#your-first-widget">Your first widget</a></h2>
+<p>While our bar is already looking great, it's a bit boring. Thus, let's add some actual content!</p>
+<pre><code class="language-lisp">(defwidget greeter [?text name]
+  (box :orientation &quot;horizontal&quot;
+       :halign &quot;center&quot;
+    text
+    (button :onclick &quot;notify-send 'Hello' 'Hello, ${name}'&quot;
+      &quot;Greet&quot;)))
+</code></pre>
+<p>To show this, let's replace the text in our window definition with a call to this new widget:</p>
+<pre><code class="language-lisp">(defwindow example
+           ; ... values omitted
+  (greeter :text &quot;Say hello!&quot;
+           :name &quot;Tim&quot;))
+</code></pre>
+<p>There is a lot going on here, so let's step through this.</p>
+<p>We are creating a widget named <code>greeter</code>. This widget takes two attributes, called <code>text</code> and <code>name</code>.
+The declaration <code>?text</code> specifies that the <code>text</code>-attribute is optional, and can thus be left out. In that case,
+its value will be the empty string <code>&quot;&quot;</code>.
+The <code>name</code> attribute <em>must</em> be provided.</p>
+<p>Now we declare the body of our widget. We make use of a <code>box</code>, which we set a couple attributes of.</p>
+<p>We need this <code>box</code>, as a widget definition can only ever contain a single widget - otherwise,
+eww would not know if it should align them vertically or horizontally, how it should space them, and so on.
+Thus, we wrap multiple children in a <code>box</code>.
+This box then contains a reference to the provided attribute <code>text</code>, as well as a button.
+In that button's <code>onclick</code> attribute, we refer to the provided <code>name</code> using string-interpolation syntax: <code>&quot;${name}&quot;</code>.
+This allows us to easily refer to any variables within strings.
+In fact, there is a lot more you can do within <code>${...}</code> - more on that in the chapter about the <a href="expression_language.html">expression language</a>.</p>
+<p>To then use our widget, we call it just like we would use any other built-in widget and provide the required attributes.</p>
+<p>As you may have noticed, we are using a couple predefined widgets here. These are all listed and explained in the <a href="widgets.html">widgets chapter</a>.</p>
+<h3 id="rendering-children-in-your-widgets"><a class="header" href="#rendering-children-in-your-widgets">Rendering children in your widgets</a></h3>
+<p>As your configuration grows, you might want to improve the structure of your config by factoring out functionality into basic reusable widgets.
+Eww allows you to create custom wrapper widgets that can themselves take children, just like some of the built-in widgets like <code>box</code> or <code>button</code> can.
+For this, use the <code>children</code> placeholder:</p>
+<pre><code class="language-lisp">(defwidget labeled-container [name]
+  (box :class &quot;container&quot;
+    name
+    (children)))
+</code></pre>
+<p>Now you can use this widget as expected:</p>
+<pre><code class="language-lisp">(labeled-container :name &quot;foo&quot;
+  (button :onclick &quot;notify-send hey ho&quot;
+    &quot;click me&quot;))
+</code></pre>
+<p>You can also create more complex structure by referring to specific children with the <code>nth</code>-attribute:</p>
+<pre><code class="language-lisp">(defwidget two-boxes []
+  (box
+    (box :class &quot;first&quot; (children :nth 0))
+    (box :class &quot;second&quot; (children :nth 1))))
+</code></pre>
+<h2 id="adding-dynamic-content"><a class="header" href="#adding-dynamic-content">Adding dynamic content</a></h2>
+<p>Now that you feel sufficiently greeted by your bar, you may realize that showing data like the time and date might be even more useful than having a button that greets you.</p>
+<p>To implement dynamic content in your widgets, you make use of <em>variables</em>.</p>
+<p>These user-defined variables are globally available from all of your widgets. Whenever the variable changes, the value in the widget will update!</p>
+<p>There are four different types of variables: basic, polling, listening, and a set of builtin &quot;magic&quot; variables.</p>
+<p><strong>Basic variables (<code>defvar</code>)</strong></p>
+<pre><code class="language-lisp">(defvar foo &quot;initial value&quot;)
+</code></pre>
+<p>This is the simplest type of variable.
+Basic variables don't ever change automatically.
+Instead, you explicitly update them by calling eww like so: <code>eww update foo=&quot;new value&quot;</code>.</p>
+<p>This is useful if you have values that change very rarely, or may change as a result of some external script you wrote.
+They may also be useful to have buttons within eww change what is shown within your widget, by setting attributes like <code>onclick</code> to run <code>eww update</code>.</p>
+<p><strong>Polling variables (<code>defpoll</code>)</strong></p>
+<pre><code class="language-lisp">(defvar time-visible false)   ; for :run-while property of below variable
+                              ; when this turns true, the polling starts and
+                              ; var gets updated with given interval
+
+(defpoll time :interval &quot;1s&quot;
+              :initial &quot;initial-value&quot;  ; optional, defaults to poll at startup
+              :run-while time-visible   ; optional, defaults to 'true'
+  `date +%H:%M:%S`)
+</code></pre>
+<p>A polling variable is a variable which runs a provided shell-script repeatedly, in a given interval.</p>
+<p>This may be the most commonly used type of variable.
+They are useful to access any quickly retrieved value repeatedly,
+and thus are the perfect choice for showing your time, date, as well as other bits of information such as pending package updates, weather, and battery level.</p>
+<p>You can also specify an initial-value. This should prevent eww from waiting for the result of a given command during startup, thus
+making the startup time faster.</p>
+<p>To externally update a polling variable, <code>eww update</code> can be used like with basic variables to assign a value.
+You can also call <code>eww poll</code> to poll the variable outside of its usual interval, or even while it isn't running at all.</p>
+<p><strong>Listening variables (<code>deflisten</code>)</strong></p>
+<pre><code class="language-lisp">(deflisten foo :initial &quot;whatever&quot;
+  `tail -F /tmp/some_file`)
+</code></pre>
+<p>Listening variables might be the most confusing of the bunch.
+A listening variable runs a script once, and reads its output continously.
+Whenever the script outputs a new line, the value will be updated to that new line.
+In the example given above, the value of <code>foo</code> will start out as <code>&quot;whatever&quot;</code>, and will change whenever a new line is appended to <code>/tmp/some_file</code>.</p>
+<p>These are particularly useful when you want to apply changes instantaneously when an operation happens if you have a script
+that can monitor some value on its own. Volume, brightness, workspaces that get added/removed at runtime,
+monitoring currently focused desktop/tag, etc. are the most common usecases of this type of variable.
+These are particularly efficient and should be preffered if possible.</p>
+<p>For example, the command <code>xprop -spy -root _NET_CURRENT_DESKTOP</code> writes the currently focused desktop whenever it changes.
+Another example usecase is monitoring the currently playing song with playerctl: <code>playerctl --follow metadata --format {{title}}</code>.</p>
+<p><strong>Built-in &quot;magic&quot; variables</strong></p>
+<p>In addition to defining your own variables, eww provides some values for you to use out of the box.
+These include values such as your CPU and RAM usage.
+These mostly contain their data as JSON, which you can then get using the <a href="expression_language.html">json access syntax</a>.
+All available magic variables are listed <a href="magic-vars.html">here</a>.</p>
+<h2 id="dynamically-generated-widgets-with-literal"><a class="header" href="#dynamically-generated-widgets-with-literal">Dynamically generated widgets with <code>literal</code></a></h2>
+<p>In some cases, you want to not only change the text,
+value, or color of a widget dynamically, but instead want to generate an entire widget structure dynamically.
+This is necessary if you want to display lists of things (for example notifications)
+where the amount is not necessarily known,
+or if you want to change the widget structure in some other, more complex way.</p>
+<p>For this, you can make use of one of eww's most powerful features: the <code>literal</code> widget.</p>
+<pre><code class="language-lisp">(defvar variable_containing_yuck
+  &quot;(box (button 'foo') (button 'bar'))&quot;)
+
+; Then, inside your widget, use:
+(literal :content variable_containing_yuck)
+</code></pre>
+<p>Here, you specify the content of your literal by providing it a string (most likely stored in a variable) which contains a single yuck widget tree.
+Eww then reads the provided value and renders the resulting widget. Whenever it changes, the widget will be rerendered.</p>
+<p>Note that this is not all that efficient. Make sure to only use <code>literal</code> when necessary!</p>
+<h2 id="using-window-arguments-and-ids"><a class="header" href="#using-window-arguments-and-ids">Using window arguments and IDs</a></h2>
+<p>In some cases you may want to use the same window configuration for multiple widgets, e.g. for multiple windows. This is where arguments and ids come in.</p>
+<h3 id="window-id"><a class="header" href="#window-id">Window ID</a></h3>
+<p>Firstly let us start off with ids. An id can be specified in the <code>open</code> command
+with <code>--id</code>, by default the id will be set to the name of the window
+configuration. These ids allow you to spawn multiple of the same windows. So
+for example you can do:</p>
+<pre><code class="language-bash">eww open my_bar --screen 0 --id primary
+eww open my_bar --screen 1 --id secondary
+</code></pre>
+<p>When using <code>open-many</code> you can follow the structure below. Again if no id is
+given, the id will default to the name of the window configuration.</p>
+<pre><code class="language-bash">eww open-many my_config:primary my_config:secondary
+</code></pre>
+<p>You may notice with this we didn't set <code>screen</code>, this is set through the
+<code>--arg</code> system, please see below for more information.</p>
+<h3 id="window-arguments"><a class="header" href="#window-arguments">Window Arguments</a></h3>
+<p>However this may not be enough and you want to have slight changes for each of
+these bars, e.g. having a different class for 1080p displays vs 4k or having
+spawning the window in a different size or location. This is where the
+arguments come in.</p>
+<p>Please note these arguments are <strong>CONSTANT</strong> and so cannot be update after the
+window has been opened.</p>
+<p>Defining arguments in a window is the exact same as in a widget so you can
+have:</p>
+<pre><code class="language-lisp">(defwindow my_bar [arg1 ?arg2]
+          :geometry (geometry
+                       :x      &quot;0%&quot;
+                       :y      &quot;6px&quot;
+                       :width  &quot;100%&quot;
+                       :height { arg1 == &quot;small&quot; ? &quot;30px&quot; : &quot;40px&quot; }
+                       :anchor &quot;top center&quot;)
+          :stacking   &quot;bg&quot;
+          :windowtype &quot;dock&quot;
+          :reserve    (struts :distance &quot;50px&quot; :side &quot;top&quot;)
+    (my_widget :arg2 arg2))
+</code></pre>
+<p>Here we have two arguments, <code>arg1</code> and <code>arg2</code> (an optional parameter).</p>
+<p>Once we have these parameters, when opening a new window, we must specify them
+(unless they are optional, like <code>arg2</code>), but how? Well, we use the <code>--arg</code>
+option when running the <code>open</code> command:</p>
+<pre><code class="language-bash">eww open my_bar --id primary --arg arg1=some_value --arg arg2=another_value
+</code></pre>
+<p>With the <code>open-many</code> it looks like this:</p>
+<pre><code class="language-bash"># Please note that `--arg` option must be given after all the windows names
+eww open-many my_bar:primary --arg primary:arg1=some_value --arg primary:arg2=another_value
+</code></pre>
+<p>Using this method you can define <code>screen</code>, <code>anchor</code>, <code>pos</code>, <code>size</code> inside the
+args for each window and it will act like giving <code>--screen</code>, <code>--anchor</code> etc. in
+the <code>open</code> command.</p>
+<p>So, now you know the basics, I shall introduce you to some of these &quot;special&quot;
+parameters, which are set slightly differently. However these can all be
+overridden by the <code>--arg</code> option.</p>
+<ul>
+<li><code>id</code> - If <code>id</code> is included in the argument list, it will be set to the id
+specified by <code>--id</code> or will be set to the name of the config. This can be
+used when closing the current window through eww commands.</li>
+<li><code>screen</code> - If <code>screen</code> is specified it will be set to the value given by
+<code>--screen</code>, so you can use this in other widgets to access screen specific
+information.</li>
+</ul>
+<h3 id="further-insight-into-args-in-open-many"><a class="header" href="#further-insight-into-args-in-open-many">Further insight into args in <code>open-many</code></a></h3>
+<p>Now due to the system behind processing the <code>open-many</code> <code>--arg</code> option you
+don't have to specify an id for each argument. If you do not, that argument
+will be applied across all windows e.g.</p>
+<pre><code class="language-bash">eww open-many my_bar:primary my_bar:secondary --arg gui_size=&quot;small&quot;
+</code></pre>
+<p>This will mean the config is the same throughout the bars.</p>
+<p>Furthermore if you didn't specify an id for the window, you can still set args
+specifically for that window - following the idea that the id will be set to
+the window configuration if not given - by just using the name of the window
+configuration e.g.</p>
+<pre><code class="language-bash">eww open-many my_primary_bar --arg my_primary_bar:screen=0
+</code></pre>
+<h2 id="generating-a-list-of-widgets-from-json-using-for"><a class="header" href="#generating-a-list-of-widgets-from-json-using-for">Generating a list of widgets from JSON using <code>for</code></a></h2>
+<p>If you want to display a list of values, you can use the <code>for</code>-Element to fill a container with a list of elements generated from a JSON-array.</p>
+<pre><code class="language-lisp">(defvar my-json &quot;[1, 2, 3]&quot;)
+
+; Then, inside your widget, you can use
+(box
+  (for entry in my-json
+    (button :onclick &quot;notify-send 'click' 'button ${entry}'&quot;
+      entry)))
+</code></pre>
+<p>This can be useful in many situations, for example when generating a workspace list from a JSON representation of your workspaces.
+In many cases, this can be used instead of <code>literal</code>, and should most likely be preferred in those cases.</p>
+<p>To see how to declare and use more advanced data structures, check out the <a href="/examples/data-structures/eww.yuck">data structures example</a>.</p>
+<h2 id="splitting-up-your-configuration"><a class="header" href="#splitting-up-your-configuration">Splitting up your configuration</a></h2>
+<p>As time passes, your configuration might grow larger and larger. Luckily, you can easily split up your configuration into multiple files!</p>
+<p>There are two options to achieve this:</p>
+<h3 id="using-include"><a class="header" href="#using-include">Using <code>include</code></a></h3>
+<pre><code class="language-lisp">(include &quot;./path/to/your/file.yuck&quot;)
+</code></pre>
+<p>A single yuck file may import the contents of any other yuck file. For this, make use of the <code>include</code> directive.</p>
+<h3 id="using-a-separate-eww-configuration-directory"><a class="header" href="#using-a-separate-eww-configuration-directory">Using a separate eww configuration directory</a></h3>
+<p>If you want to separate different widgets even further, you can create a new eww config folder anywhere else.
+Then, you can tell eww to use that configuration directory by passing <em>every</em> command the <code>--config /path/to/your/config/dir</code> flag.
+Make sure to actually include this in all your <code>eww</code> calls, including <code>eww kill</code>, <code>eww logs</code>, etc.
+This launches a separate instance of the eww daemon that has separate logs and state from your main eww configuration.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="simple-expression-language"><a class="header" href="#simple-expression-language">Simple expression language</a></h1>
+<p>Yuck includes a small expression language that can be used to run several operations on your data.
+This can be used to show different values depending on certain conditions,
+do mathematic operations, and even access values within JSON-structures.</p>
+<p>These expressions can be placed anywhere within your configuration inside <code>{ ... }</code>,
+as well as within strings, inside string-interpolation blocks (<code>&quot;foo ${ ... } bar&quot;</code>).</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<pre><code class="language-lisp">(box
+  &quot;Some math: ${12 + foo * 10}&quot;
+  (button :class {button_active ? &quot;active&quot; : &quot;inactive&quot;}
+          :onclick &quot;toggle_thing&quot;
+    {button_active ? &quot;disable&quot; : &quot;enable&quot;}))
+</code></pre>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<p>Supported currently are the following features:</p>
+<ul>
+<li>simple mathematical operations (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>)</li>
+<li>comparisons (<code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>)</li>
+<li>boolean operations (<code>||</code>, <code>&amp;&amp;</code>, <code>!</code>)</li>
+<li>regex match operator (<code>=~</code>)
+<ul>
+<li>Rust regex style, left hand is regex, right hand is string</li>
+<li>ex: workspace.name =~ '^special:.+$'</li>
+</ul>
+</li>
+<li>elvis operator (<code>?:</code>)
+<ul>
+<li>if the left side is <code>&quot;&quot;</code> or a JSON <code>null</code>, then returns the right side,
+otherwise evaluates to the left side.</li>
+</ul>
+</li>
+<li>Safe Access operator (<code>?.</code>) or (<code>?.[index]</code>)
+<ul>
+<li>if the left side is an empty string or a JSON <code>null</code>, then return <code>null</code>. Otherwise,
+attempt to index. Note that indexing an empty JSON string (<code>'&quot;&quot;'</code>) is an error.</li>
+<li>This can still cause an error to occur if the left hand side exists but is
+not an object or an array.
+(<code>Number</code> or <code>String</code>).</li>
+</ul>
+</li>
+<li>conditionals (<code>condition ? 'value' : 'other value'</code>)</li>
+<li>numbers, strings, booleans and variable references (<code>12</code>, <code>'hi'</code>, <code>true</code>, <code>some_variable</code>)</li>
+<li>json access (<code>object.field</code>, <code>array[12]</code>, <code>object[&quot;field&quot;]</code>)
+<ul>
+<li>for this, the object/array value needs to refer to a variable that contains a valid json string.</li>
+</ul>
+</li>
+<li>some function calls:
+<ul>
+<li><code>round(number, decimal_digits)</code>: Round a number to the given amount of decimals</li>
+<li><code>floor(number)</code>: Round a number down to the nearest integer</li>
+<li><code>ceil(number)</code>: Round a number up to the nearest integer</li>
+<li><code>sin(number)</code>, <code>cos(number)</code>, <code>tan(number)</code>, <code>cot(number)</code>: Calculate the trigonometric value of a given number in <strong>radians</strong></li>
+<li><code>min(a, b)</code>, <code>max(a, b)</code>: Get the smaller or bigger number out of two given numbers</li>
+<li><code>powi(num, n)</code>, <code>powf(num, n)</code>: Raise number <code>num</code> to power <code>n</code>. <code>powi</code> expects <code>n</code> to be of type <code>i32</code></li>
+<li><code>log(num, n)</code>: Calculate the base <code>n</code> logarithm of <code>num</code>. <code>num</code>, <code>n</code> and return type are <code>f64</code></li>
+<li><code>degtorad(number)</code>: Converts a number from degrees to radians</li>
+<li><code>radtodeg(number)</code>: Converts a number from radians to degrees</li>
+<li><code>replace(string, regex, replacement)</code>: Replace matches of a given regex in a string</li>
+<li><code>search(string, regex)</code>: Search for a given regex in a string (returns array)</li>
+<li><code>matches(string, regex)</code>: check if a given string matches a given regex (returns bool)</li>
+<li><code>captures(string, regex)</code>: Get the captures of a given regex in a string (returns array)</li>
+<li><code>strlength(value)</code>: Gets the length of the string
+<ul>
+<li><code>substring(string, start, length)</code>: Return a substring of given length starting at the given index</li>
+</ul>
+</li>
+<li><code>arraylength(value)</code>: Gets the length of the array</li>
+<li><code>objectlength(value)</code>: Gets the amount of entries in the object</li>
+<li><code>jq(value, jq_filter_string)</code>: run a <a href="https://jqlang.github.io/jq/manual/">jq</a> style command on a json value. (Uses <a href="https://crates.io/crates/jaq">jaq</a> internally).</li>
+<li><code>jq(value, jq_filter_string, args)</code>: Emulate command line flags for jq, see <a href="https://jqlang.github.io/jq/manual/#invoking-jq">the docs</a> on invoking jq for details. Invalid flags are silently ignored.
+Currently supported flags:
+<ul>
+<li><code>&quot;r&quot;</code>: If the result is a string, it won't be formatted as a JSON string. The equivalent jq flag is <code>--raw-output</code>.</li>
+</ul>
+</li>
+<li><code>get_env(string)</code>: Gets the specified enviroment variable</li>
+<li><code>formattime(unix_timestamp, format_str, timezone)</code>: Gets the time in a given format from UNIX timestamp.
+Check <a href="https://docs.rs/chrono/latest/chrono/format/strftime/index.html">chrono's documentation</a> for more
+information about format string and <a href="https://docs.rs/chrono-tz/latest/chrono_tz/enum.Tz.html">chrono-tz's documentation</a>
+for available time zones.</li>
+<li><code>formattime(unix_timestamp, format_str)</code>: Gets the time in a given format from UNIX timestamp.
+Same as other <code>formattime</code>, but does not accept timezone. Instead, it uses system's local timezone.
+Check <a href="https://docs.rs/chrono/latest/chrono/format/strftime/index.html">chrono's documentation</a> for more
+information about format string.</li>
+<li><code>formatbytes(bytes, short, format_mode)</code>: Display bytes in a human-readable format.
+Arguments:
+<ul>
+<li><code>bytes</code>: <code>i64</code> of bytes, supports negative sizes.</li>
+<li><code>short</code>: set true for a compact version (default: false)</li>
+<li><code>format_mode</code>: set to either to &quot;iec&quot; (eg. <code>1.0 GiB</code>) or &quot;si&quot; (eg. <code>1.2 GB</code>) (default: &quot;iec&quot;)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="gtk"><a class="header" href="#gtk">GTK</a></h1>
+<h2 id="gtk-theming"><a class="header" href="#gtk-theming">Gtk-theming</a></h2>
+<p>Eww is styled in GTK CSS.
+You can use <code>Vanilla CSS</code> or <code>SCSS</code> to make theming even easier. The latter is compiled into CSS for you.
+If you don't know any way to style something check out the <a href="https://docs.gtk.org/gtk3/css-overview.html">GTK CSS Overview wiki</a>,
+the <a href="https://docs.gtk.org/gtk3/css-properties.html">GTK CSS Properties Overview wiki </a>,
+or use the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a>.</p>
+<p>If you have <strong>NO</strong> clue about how to do CSS, check out some online guides or tutorials.</p>
+<p>SCSS is <em>very</em> close to CSS, so if you know CSS you'll have no problem learning SCSS.</p>
+<h2 id="gtk-debugger"><a class="header" href="#gtk-debugger">GTK-Debugger</a></h2>
+<p>The debugger can be used for <strong>a lot</strong> of things, especially if something doesn't work or isn't styled right.</p>
+<p>To open the GTK debugger, simply run</p>
+<pre><code class="language-bash">eww inspector
+</code></pre>
+<p>If a style or something similar doesn't work, you can click on the icon in the top left to select the thing that isn't being styled correctly.</p>
+<p>Then you can click on the drop down menu in the top right corner and select CSS Nodes. Here you will see everything about styling it, CSS Properties, and how it's structured.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="magic-variables"><a class="header" href="#magic-variables">Magic variables</a></h1>
+<p>These are variables that are always there, without you having to import them.</p>
+<p>The delay between all the updating variables except <code>EWW_TIME</code> is 2s, for <code>EWW_TIME</code> it is 1s.</p>
+<h3 id="eww_temps"><a class="header" href="#eww_temps"><code>EWW_TEMPS</code></a></h3>
+<p>Heat of the components in degree Celsius</p>
+<h4 id="structure"><a class="header" href="#structure">Structure</a></h4>
+<pre><code>{ &lt;name&gt;: temperature }
+</code></pre>
+<h3 id="eww_ram"><a class="header" href="#eww_ram"><code>EWW_RAM</code></a></h3>
+<p>Information on ram and swap usage in bytes.</p>
+<h4 id="structure-1"><a class="header" href="#structure-1">Structure</a></h4>
+<pre><code>{ total_mem, free_mem, total_swap, free_swap, available_mem, used_mem, used_mem_perc }
+</code></pre>
+<h3 id="eww_disk"><a class="header" href="#eww_disk"><code>EWW_DISK</code></a></h3>
+<p>Information on on all mounted partitions (Might report inaccurately on some filesystems, like btrfs and zfs) Example: <code>{EWW_DISK[&quot;/&quot;]}</code></p>
+<h4 id="structure-2"><a class="header" href="#structure-2">Structure</a></h4>
+<pre><code>{ &lt;mount_point&gt;: { name, total, free, used, used_perc } }
+</code></pre>
+<h3 id="eww_battery"><a class="header" href="#eww_battery"><code>EWW_BATTERY</code></a></h3>
+<p>Battery capacity in percent of the main battery</p>
+<h4 id="structure-3"><a class="header" href="#structure-3">Structure</a></h4>
+<pre><code>{ &lt;name&gt;: { capacity, status } }
+</code></pre>
+<h3 id="eww_cpu"><a class="header" href="#eww_cpu"><code>EWW_CPU</code></a></h3>
+<p>Information on the CPU cores: frequency and usage (No MacOS support)</p>
+<h4 id="structure-4"><a class="header" href="#structure-4">Structure</a></h4>
+<pre><code>{ cores: [{ core, freq, usage }], avg }
+</code></pre>
+<h3 id="eww_net"><a class="header" href="#eww_net"><code>EWW_NET</code></a></h3>
+<p>Bytes up/down on all interfaces</p>
+<h4 id="structure-5"><a class="header" href="#structure-5">Structure</a></h4>
+<pre><code>{ &lt;name&gt;: { up, down } }
+</code></pre>
+<h3 id="eww_time"><a class="header" href="#eww_time"><code>EWW_TIME</code></a></h3>
+<p>the current UNIX timestamp</p>
+<h3 id="eww_config_dir"><a class="header" href="#eww_config_dir"><code>EWW_CONFIG_DIR</code></a></h3>
+<p>Path to the eww configuration of the current process</p>
+<h3 id="eww_cmd"><a class="header" href="#eww_cmd"><code>EWW_CMD</code></a></h3>
+<p>eww command running in the current configuration, useful in event handlers. I.e.: <code>:onclick &quot;${EWW_CMD} update foo=bar&quot;</code></p>
+<h3 id="eww_executable"><a class="header" href="#eww_executable"><code>EWW_EXECUTABLE</code></a></h3>
+<p>Full path of the eww executable</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="widgets"><a class="header" href="#widgets">Widgets</a></h1>
+<h2 id="widget"><a class="header" href="#widget"><code>widget</code></a></h2>
+<p>these properties apply to <em>all</em> widgets, and can be used anywhere!</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>class</code></strong>: <em><code>string</code></em> css class name</li>
+<li><strong><code>valign</code></strong>: <em><code>string</code></em> how to align this vertically. possible values: &quot;fill&quot;, &quot;baseline&quot;, &quot;center&quot;, &quot;start&quot;, &quot;end&quot;</li>
+<li><strong><code>halign</code></strong>: <em><code>string</code></em> how to align this horizontally. possible values: &quot;fill&quot;, &quot;baseline&quot;, &quot;center&quot;, &quot;start&quot;, &quot;end&quot;</li>
+<li><strong><code>vexpand</code></strong>: <em><code>bool</code></em> should this container expand vertically. Default: false.</li>
+<li><strong><code>hexpand</code></strong>: <em><code>bool</code></em> should this widget expand horizontally. Default: false.</li>
+<li><strong><code>width</code></strong>: <em><code>int</code></em> width of this element. note that this can not restrict the size if the contents stretch it</li>
+<li><strong><code>height</code></strong>: <em><code>int</code></em> height of this element. note that this can not restrict the size if the contents stretch it</li>
+<li><strong><code>active</code></strong>: <em><code>bool</code></em> If this widget can be interacted with</li>
+<li><strong><code>tooltip</code></strong>: <em><code>string</code></em> tooltip text (on hover)</li>
+<li><strong><code>visible</code></strong>: <em><code>bool</code></em> visibility of the widget</li>
+<li><strong><code>style</code></strong>: <em><code>string</code></em> inline scss style applied to the widget</li>
+<li><strong><code>css</code></strong>: <em><code>string</code></em> scss code applied to the widget, i.e.: <code>button {color: red;}</code></li>
+</ul>
+<h2 id="combo-box-text"><a class="header" href="#combo-box-text"><code>combo-box-text</code></a></h2>
+<p>A combo box allowing the user to choose between several items.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>items</code></strong>: <em><code>vec</code></em> Items that should be displayed in the combo box</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command: Default: &quot;200ms&quot;</li>
+<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when a item was selected, replacing {} with the item as a string</li>
+</ul>
+<h2 id="expander"><a class="header" href="#expander"><code>expander</code></a></h2>
+<p>A widget that can expand and collapse, showing/hiding it's children. Should contain</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>name</code></strong>: <em><code>string</code></em> name of the expander</li>
+<li><strong><code>expanded</code></strong>: <em><code>bool</code></em> sets if the tree is expanded</li>
+</ul>
+<h2 id="revealer"><a class="header" href="#revealer"><code>revealer</code></a></h2>
+<p>A widget that can reveal a child with an animation.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>transition</code></strong>: <em><code>string</code></em> the name of the transition. Possible values: &quot;slideright&quot;, &quot;slideleft&quot;, &quot;slideup&quot;, &quot;slidedown&quot;, &quot;crossfade&quot;, &quot;none&quot;</li>
+<li><strong><code>reveal</code></strong>: <em><code>bool</code></em> sets if the child is revealed or not</li>
+<li><strong><code>duration</code></strong>: <em><code>duration</code></em> the duration of the reveal transition. Default: &quot;500ms&quot;</li>
+</ul>
+<h2 id="a-checkbox"><a class="header" href="#a-checkbox"><code>a checkbox</code></a></h2>
+<p>A checkbox that can trigger events on checked / unchecked.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>checked</code></strong>: <em><code>bool</code></em> whether the checkbox is toggled or not when created</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+<li><strong><code>onchecked</code></strong>: <em><code>string</code></em> action (command) to be executed when checked by the user</li>
+<li><strong><code>onunchecked</code></strong>: <em><code>string</code></em> similar to onchecked but when the widget is unchecked</li>
+</ul>
+<h2 id="color-button"><a class="header" href="#color-button"><code>color-button</code></a></h2>
+<p>A button opening a color chooser window</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>use-alpha</code></strong>: <em><code>bool</code></em> bool to whether or not use alpha</li>
+<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when the color was selected</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+</ul>
+<h2 id="color-chooser"><a class="header" href="#color-chooser"><code>color-chooser</code></a></h2>
+<p>A color chooser widget</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>use-alpha</code></strong>: <em><code>bool</code></em> bool to wether or not use alpha</li>
+<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when the color was selected</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+</ul>
+<h2 id="scale"><a class="header" href="#scale"><code>scale</code></a></h2>
+<p>A slider.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>flipped</code></strong>: <em><code>bool</code></em> flip the direction</li>
+<li><strong><code>marks</code></strong>: <em><code>string</code></em> draw marks</li>
+<li><strong><code>draw-value</code></strong>: <em><code>bool</code></em> draw the value of the property</li>
+<li><strong><code>value-pos</code></strong>: <em><code>string</code></em> position of the drawn value. possible values: &quot;left&quot;, &quot;right&quot;, &quot;top&quot;, &quot;bottom&quot;</li>
+<li><strong><code>round-digits</code></strong>: <em><code>int</code></em> Sets the number of decimals to round the value to when it changes</li>
+<li><strong><code>value</code></strong>: <em><code>float</code></em> the value</li>
+<li><strong><code>min</code></strong>: <em><code>float</code></em> the minimum value</li>
+<li><strong><code>max</code></strong>: <em><code>float</code></em> the maximum value</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+<li><strong><code>onchange</code></strong>: <em><code>string</code></em> command executed once the value is changes. The placeholder <code>{}</code>, used in the command will be replaced by the new value.</li>
+<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the widget. Possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
+</ul>
+<h2 id="progress"><a class="header" href="#progress"><code>progress</code></a></h2>
+<p>A progress bar. HINT: for the <code>width</code> property to work, you may need to set the <code>min-width</code> of <code>progressbar &gt; trough</code> in your css.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>flipped</code></strong>: <em><code>bool</code></em> flip the direction</li>
+<li><strong><code>value</code></strong>: <em><code>float</code></em> value of the progress bar (between 0-100)</li>
+<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the progress bar. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
+</ul>
+<h2 id="input"><a class="header" href="#input"><code>input</code></a></h2>
+<p>An input field. For this to be useful, set <code>focusable=&quot;true&quot;</code> on the window.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>value</code></strong>: <em><code>string</code></em> the content of the text field</li>
+<li><strong><code>onchange</code></strong>: <em><code>string</code></em> Command to run when the text changes. The placeholder <code>{}</code> will be replaced by the value</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+<li><strong><code>onaccept</code></strong>: <em><code>string</code></em> Command to run when the user hits return in the input field. The placeholder <code>{}</code> will be replaced by the value</li>
+<li><strong><code>password</code></strong>: <em><code>bool</code></em> if the input is obscured</li>
+</ul>
+<h2 id="button"><a class="header" href="#button"><code>button</code></a></h2>
+<p>A button containing any widget as it's child. Events are triggered on release.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the button is activated either by leftclicking or keyboard</li>
+<li><strong><code>onmiddleclick</code></strong>: <em><code>string</code></em> command to run when the button is middleclicked</li>
+<li><strong><code>onrightclick</code></strong>: <em><code>string</code></em> command to run when the button is rightclicked</li>
+</ul>
+<h2 id="image"><a class="header" href="#image"><code>image</code></a></h2>
+<p>A widget displaying an image</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>path</code></strong>: <em><code>string</code></em> path to the image file</li>
+<li><strong><code>image-width</code></strong>: <em><code>int</code></em> width of the image</li>
+<li><strong><code>image-height</code></strong>: <em><code>int</code></em> height of the image</li>
+<li><strong><code>preserve-aspect-ratio</code></strong>: <em><code>bool</code></em> whether to keep the aspect ratio when resizing an image. Default: true, false doesn't work for all image types</li>
+<li><strong><code>fill-svg</code></strong>: <em><code>string</code></em> sets the color of svg images</li>
+<li><strong><code>icon</code></strong>: <em><code>string</code></em> name of a theme icon</li>
+<li><strong><code>icon-size</code></strong>: <em><code>string</code></em> size of the theme icon</li>
+</ul>
+<h2 id="box"><a class="header" href="#box"><code>box</code></a></h2>
+<p>the main layout container</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>spacing</code></strong>: <em><code>int</code></em> spacing between elements</li>
+<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the box. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
+<li><strong><code>space-evenly</code></strong>: <em><code>bool</code></em> space the widgets evenly.</li>
+</ul>
+<h2 id="overlay"><a class="header" href="#overlay"><code>overlay</code></a></h2>
+<p>a widget that places its children on top of each other. The overlay widget takes the size of its first child.</p>
+<p><strong>Properties</strong></p>
+<h2 id="tooltip"><a class="header" href="#tooltip"><code>tooltip</code></a></h2>
+<p>A widget that have a custom tooltip. The first child is the content of the tooltip, the second one is the content of the widget.</p>
+<p><strong>Properties</strong></p>
+<h2 id="centerbox"><a class="header" href="#centerbox"><code>centerbox</code></a></h2>
+<p>a box that must contain exactly three children, which will be layed out at the start, center and end of the container.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the centerbox. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
+</ul>
+<h2 id="scroll"><a class="header" href="#scroll"><code>scroll</code></a></h2>
+<p>a container with a single child that can scroll.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>hscroll</code></strong>: <em><code>bool</code></em> scroll horizontally</li>
+<li><strong><code>vscroll</code></strong>: <em><code>bool</code></em> scroll vertically</li>
+</ul>
+<h2 id="eventbox"><a class="header" href="#eventbox"><code>eventbox</code></a></h2>
+<p>a container which can receive events and must contain exactly one child. Supports <code>:hover</code> and <code>:active</code> css selectors.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+<li><strong><code>onscroll</code></strong>: <em><code>string</code></em> event to execute when the user scrolls with the mouse over the widget. The placeholder <code>{}</code> used in the command will be replaced with either <code>up</code> or <code>down</code>.</li>
+<li><strong><code>onhover</code></strong>: <em><code>string</code></em> event to execute when the user hovers over the widget</li>
+<li><strong><code>onhoverlost</code></strong>: <em><code>string</code></em> event to execute when the user losts hovers over the widget</li>
+<li><strong><code>cursor</code></strong>: <em><code>string</code></em> Cursor to show while hovering (see <a href="https://docs.gtk.org/gdk3/ctor.Cursor.new_from_name.html">gtk3-cursors</a> for possible names)</li>
+<li><strong><code>ondropped</code></strong>: <em><code>string</code></em> Command to execute when something is dropped on top of this element. The placeholder <code>{}</code> used in the command will be replaced with the uri to the dropped thing.</li>
+<li><strong><code>dragvalue</code></strong>: <em><code>string</code></em> URI that will be provided when dragging from this widget</li>
+<li><strong><code>dragtype</code></strong>: <em><code>string</code></em> Type of value that should be dragged from this widget. Possible values: &quot;file&quot;, &quot;text&quot;</li>
+<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the widget is clicked</li>
+<li><strong><code>onmiddleclick</code></strong>: <em><code>string</code></em> command to run when the widget is middleclicked</li>
+<li><strong><code>onrightclick</code></strong>: <em><code>string</code></em> command to run when the widget is rightclicked</li>
+</ul>
+<h2 id="label"><a class="header" href="#label"><code>label</code></a></h2>
+<p>A text widget giving you more control over how the text is displayed</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>text</code></strong>: <em><code>string</code></em> the text to display</li>
+<li><strong><code>truncate</code></strong>: <em><code>bool</code></em> whether to truncate text (or pango markup). If <code>show-truncated</code> is <code>false</code>, or if <code>limit-width</code> has a value, this property has no effect and truncation is enabled.</li>
+<li><strong><code>limit-width</code></strong>: <em><code>int</code></em> maximum count of characters to display</li>
+<li><strong><code>truncate-left</code></strong>: <em><code>bool</code></em> whether to truncate on the left side</li>
+<li><strong><code>show-truncated</code></strong>: <em><code>bool</code></em> show whether the text was truncated. Disabling it will also disable dynamic truncation (the labels won't be truncated more than <code>limit-width</code>, even if there is not enough space for them), and will completly disable truncation on pango markup.</li>
+<li><strong><code>unindent</code></strong>: <em><code>bool</code></em> whether to remove leading spaces</li>
+<li><strong><code>markup</code></strong>: <em><code>string</code></em> Pango markup to display</li>
+<li><strong><code>wrap</code></strong>: <em><code>bool</code></em> Wrap the text. This mainly makes sense if you set the width of this widget.</li>
+<li><strong><code>angle</code></strong>: <em><code>float</code></em> the angle of rotation for the label (between 0 - 360)</li>
+<li><strong><code>gravity</code></strong>: <em><code>string</code></em> the gravity of the string (south, east, west, north, auto). Text will want to face the direction of gravity.</li>
+<li><strong><code>xalign</code></strong>: <em><code>float</code></em> the alignment of the label text on the x axis (between 0 - 1, 0 -&gt; left, 0.5 -&gt; center, 1 -&gt; right)</li>
+<li><strong><code>yalign</code></strong>: <em><code>float</code></em> the alignment of the label text on the y axis (between 0 - 1, 0 -&gt; bottom, 0.5 -&gt; center, 1 -&gt; top)</li>
+<li><strong><code>justify</code></strong>: <em><code>string</code></em> the justification of the label text (left, right, center, fill)</li>
+<li><strong><code>wrap-mode</code></strong>: <em><code>string</code></em> how text is wrapped. possible options: &quot;word&quot;, &quot;char&quot;, &quot;wordchar&quot;</li>
+<li><strong><code>lines</code></strong>: <em><code>int</code></em> maximum number of lines to display (only works when <code>limit-width</code> has a value). A value of -1 (default) disables the limit.</li>
+</ul>
+<h2 id="literal"><a class="header" href="#literal"><code>literal</code></a></h2>
+<p>A widget that allows you to render arbitrary yuck.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>content</code></strong>: <em><code>string</code></em> inline yuck that will be rendered as a widget.</li>
+</ul>
+<h2 id="calendar"><a class="header" href="#calendar"><code>calendar</code></a></h2>
+<p>A widget that displays a calendar</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>day</code></strong>: <em><code>float</code></em> the selected day</li>
+<li><strong><code>month</code></strong>: <em><code>float</code></em> the selected month</li>
+<li><strong><code>year</code></strong>: <em><code>float</code></em> the selected year</li>
+<li><strong><code>show-details</code></strong>: <em><code>bool</code></em> show details</li>
+<li><strong><code>show-heading</code></strong>: <em><code>bool</code></em> show heading line</li>
+<li><strong><code>show-day-names</code></strong>: <em><code>bool</code></em> show names of days</li>
+<li><strong><code>show-week-numbers</code></strong>: <em><code>bool</code></em> show week numbers</li>
+<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the user selects a date. The <code>{0}</code> placeholder will be replaced by the selected day, <code>{1}</code> will be replaced by the month, and <code>{2}</code> by the year.</li>
+<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
+</ul>
+<h2 id="stack"><a class="header" href="#stack"><code>stack</code></a></h2>
+<p>A widget that displays one of its children at a time</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>selected</code></strong>: <em><code>int</code></em> index of child which should be shown</li>
+<li><strong><code>transition</code></strong>: <em><code>string</code></em> the name of the transition. Possible values: &quot;slideright&quot;, &quot;slideleft&quot;, &quot;slideup&quot;, &quot;slidedown&quot;, &quot;crossfade&quot;, &quot;none&quot;</li>
+<li><strong><code>same-size</code></strong>: <em><code>bool</code></em> sets whether all children should be the same size</li>
+</ul>
+<h2 id="transform"><a class="header" href="#transform"><code>transform</code></a></h2>
+<p>A widget that applies transformations to its content. They are applied in the following order: rotate -&gt; translate -&gt; scale</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>rotate</code></strong>: <em><code>float</code></em> the percentage to rotate</li>
+<li><strong><code>transform-origin-x</code></strong>: <em><code>string</code></em> x coordinate of origin of transformation (px or %)</li>
+<li><strong><code>transform-origin-y</code></strong>: <em><code>string</code></em> y coordinate of origin of transformation (px or %)</li>
+<li><strong><code>translate-x</code></strong>: <em><code>string</code></em> the amount to translate in the x direction (px or %)</li>
+<li><strong><code>translate-y</code></strong>: <em><code>string</code></em> the amount to translate in the y direction (px or %)</li>
+<li><strong><code>scale-x</code></strong>: <em><code>string</code></em> the amount to scale in the x direction (px or %)</li>
+<li><strong><code>scale-y</code></strong>: <em><code>string</code></em> the amount to scale in the y direction (px or %)</li>
+</ul>
+<h2 id="circular-progress"><a class="header" href="#circular-progress"><code>circular-progress</code></a></h2>
+<p>A widget that displays a circular progress bar</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>value</code></strong>: <em><code>float</code></em> the value, between 0 - 100</li>
+<li><strong><code>start-at</code></strong>: <em><code>float</code></em> the percentage that the circle should start at</li>
+<li><strong><code>thickness</code></strong>: <em><code>float</code></em> the thickness of the circle</li>
+<li><strong><code>clockwise</code></strong>: <em><code>bool</code></em> wether the progress bar spins clockwise or counter clockwise</li>
+</ul>
+<h2 id="graph"><a class="header" href="#graph"><code>graph</code></a></h2>
+<p>A widget that displays a graph showing how a given value changes over time</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>value</code></strong>: <em><code>float</code></em> the value, between 0 - 100</li>
+<li><strong><code>thickness</code></strong>: <em><code>float</code></em> the thickness of the line</li>
+<li><strong><code>time-range</code></strong>: <em><code>duration</code></em> the range of time to show</li>
+<li><strong><code>min</code></strong>: <em><code>float</code></em> the minimum value to show (defaults to 0 if value_max is provided)</li>
+<li><strong><code>max</code></strong>: <em><code>float</code></em> the maximum value to show</li>
+<li><strong><code>dynamic</code></strong>: <em><code>bool</code></em> whether the y range should dynamically change based on value</li>
+<li><strong><code>line-style</code></strong>: <em><code>string</code></em> changes the look of the edges in the graph. Values: &quot;miter&quot; (default), &quot;round&quot;,</li>
+<li><strong><code>flip-x</code></strong>: <em><code>bool</code></em> whether the x axis should go from high to low</li>
+<li><strong><code>flip-y</code></strong>: <em><code>bool</code></em> whether the y axis should go from high to low</li>
+<li><strong><code>vertical</code></strong>: <em><code>bool</code></em> if set to true, the x and y axes will be exchanged</li>
+</ul>
+<h2 id="systray"><a class="header" href="#systray"><code>systray</code></a></h2>
+<p>Tray for system notifier icons</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><strong><code>spacing</code></strong>: <em><code>int</code></em> spacing between elements</li>
+<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the box. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
+<li><strong><code>space-evenly</code></strong>: <em><code>bool</code></em> space the widgets evenly.</li>
+<li><strong><code>icon-size</code></strong>: <em><code>int</code></em> size of icons in the tray</li>
+<li><strong><code>prepend-new</code></strong>: <em><code>bool</code></em> prepend new icons.</li>
+</ul>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h1>
+<p>Here you will find help if something doesn't work. If the issue isn't listed here, please <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo.</a></p>
+<h2 id="eww-does-not-compile"><a class="header" href="#eww-does-not-compile">Eww does not compile</a></h2>
+<ol>
+<li>Make sure that you are compiling eww using a recent version of rust (run <code>rustup update</code> to be sure you have the latest version available)</li>
+<li>Make sure you have all the necessary dependencies. If there are compile-errors, the compiler will tell you what you're missing.</li>
+</ol>
+<h2 id="eww-does-not-work-on-wayland"><a class="header" href="#eww-does-not-work-on-wayland">Eww does not work on Wayland</a></h2>
+<ol>
+<li>Make sure you compiled eww with the <code>--no-default-features --features=wayland</code> flags.</li>
+<li>Make sure that you're not trying to use X11-specific features (these are (hopefully) explicitly specified as such in the documentation).</li>
+</ol>
+<h2 id="my-configuration-is-not-loaded-correctly"><a class="header" href="#my-configuration-is-not-loaded-correctly">My configuration is not loaded correctly</a></h2>
+<ol>
+<li>Make sure the <code>eww.yuck</code> and <code>eww.(s)css</code> files are in the correct places.</li>
+<li>Sometimes, eww might fail to load your configuration as a result of a configuration error. Make sure your configuration is valid.</li>
+</ol>
+<h2 id="something-isnt-styled-correctly"><a class="header" href="#something-isnt-styled-correctly">Something isn't styled correctly!</a></h2>
+<p>Check the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a> to get more insight into what styles GTK is applying to which elements.</p>
+<h2 id="general-issues"><a class="header" href="#general-issues">General issues</a></h2>
+<p>You should try the following things before opening an issue or doing more specialized troubleshooting:</p>
+<ul>
+<li>Kill the eww daemon by running <code>eww kill</code> and re-open your window with the <code>--debug</code>-flag to get additional log output.</li>
+<li>Now you can take a look at the logs by running <code>eww logs</code>.</li>
+<li>Use <code>eww state</code> to see the state of all variables.</li>
+<li>Use <code>eww debug</code> to see the structure of your widget and other information.</li>
+<li>Update to the latest eww version.</li>
+<li>Sometimes hot reloading doesn't work. In that case, you can make use of <code>eww reload</code> manually.</li>
+</ul>
+<p>Remember, if your issue isn't listed here, <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo</a>.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="example-configurations"><a class="header" href="#example-configurations">Example Configurations</a></h2>
+<p>These configurations of eww are available in the <code>examples/</code> directory of the <a href="https://github.com/elkowar/eww">repo</a>.</p>
+<p>An eww bar configuration:
+<img src="https://github.com/elkowar/eww/raw/master/examples/eww-bar/eww-bar.png" alt="Example bar" /></p>
+<p>A demo on how to declare and use data structures:</p>
+<p><img src="https://github.com/elkowar/eww/raw/master/examples/data-structures/data-structures-preview.png" alt="Data structure example" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
