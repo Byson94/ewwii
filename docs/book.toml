@@ -1,0 +1,10 @@
+[book]
+title = "ewwii documentation"
+authors = ["Byson94"]
+language = "en"
+src = "src"
+repo = "https://github.com/byson94/ewwii"
+
+[output.html]
+git-repository-url = "https://github.com/byson94/ewwii"
+edit-url-template = "https://github.com/byson94/ewwii/edit/main/docs/src/{path}"
