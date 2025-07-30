@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="eww.html">Eww - Widgets for everyone!</a></li><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Eww expressions</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">Theming with GTK</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="eww.html">Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html">Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -228,39 +228,47 @@ When you're on Wayland, build with:</p>
 <pre><code>./ewwii daemon
 ./ewwii open &lt;window_name&gt;
 </code></pre>
-<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="writing-your-eww-configuration"><a class="header" href="#writing-your-eww-configuration">Writing your eww configuration</a></h1>
-<p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>),  see <a href="widgets.html">Widget Documentation</a>.)<br />
-Eww is configured using its own language called <code>yuck</code>.
-Using yuck, you declare the structure and content of your widgets, the geometry, position, and behavior of any windows,
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="core-concepts"><a class="header" href="#core-concepts">Core Concepts</a></h1>
+<p>The core concepts of ewwii include its configuration, expressions, theming and magic variables.</p>
+<table><thead><tr><th>Concept</th><th>Description</th></tr></thead><tbody>
+<tr><td>Configuration</td><td>The configuration system of ewwii.</td></tr>
+<tr><td>Expressions</td><td>Using expressions in ewwii configuration.</td></tr>
+<tr><td>Theming</td><td>Theming the configuration to look good.</td></tr>
+<tr><td>Magic variables</td><td>Custom variables that are provided dynamic based on certain conditions.</td></tr>
+</tbody></table>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="writing-your-ewwii-configuration"><a class="header" href="#writing-your-ewwii-configuration">Writing your ewwii configuration</a></h1>
+<p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>), see <a href="widgets.html">Widget Documentation</a>.)<br />
+Eww is configured using its own language called <code>rhai</code>.
+Using rhai, you declare the structure and content of your widgets, the geometry, position, and behavior of any windows,
 as well as any state and data that will be used in your widgets.
-Yuck is based around S-expressions, which you may know from lisp-like languages.
-If you're using vim, you can make use of <a href="https://github.com/elkowar/yuck.vim">yuck.vim</a> for editor support.
-If you're using VSCode, you can get syntax highlighting and formatting from <a href="https://marketplace.visualstudio.com/items?itemName=eww-yuck.yuck">yuck-vscode</a>.
-It is also recommended to use <a href="https://shaunlebron.github.io/parinfer/">parinfer</a>,
-which makes working with S-expressions delightfully easy!</p>
+Rhai is based around imparative syntax, which you may know from programming languages like C, Rust etc.
+If you're using vim, you can make use of <a href="https://github.com/rhaiscript/vim-rhai">vim-rhai</a> for editor support.
+If you're using VSCode, you can get syntax highlighting and formatting from <a href="https://marketplace.visualstudio.com/items?itemName=rhaiscript.vscode-rhai">vscode-rhai</a>.</p>
 <p>Additionally, any styles are defined in CSS or SCSS (which is mostly just slightly improved CSS syntax).
 While eww supports a significant portion of the CSS you know from the web,
 not everything is supported, as eww relies on GTK's own CSS engine.
 Notably, some animation features are unsupported,
 as well as most layout-related CSS properties such as flexbox, <code>float</code>, absolute position or <code>width</code>/<code>height</code>.</p>
-<p>To get started, you'll need to create two files: <code>eww.yuck</code> and <code>eww.scss</code> (or <code>eww.css</code>, if you prefer).
-These files must be placed under <code>$XDG_CONFIG_HOME/eww</code> (this is most likely <code>~/.config/eww</code>).</p>
+<p>To get started, you'll need to create two files: <code>ewwii.rhai</code> and <code>ewwii.scss</code> (or <code>ewwii.css</code>, if you prefer).
+These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is most likely <code>~/.config/ewwii</code>).</p>
 <p>Now that those files are created, you can start writing your first widget!</p>
 <h2 id="creating-your-first-window"><a class="header" href="#creating-your-first-window">Creating your first window</a></h2>
 <p>Firstly, you will need to create a top-level window. Here, you configure things such as the name, position, geometry, and content of your window.</p>
 <p>Let's look at an example window definition:</p>
-<pre><code class="language-lisp">(defwindow example
-           :monitor 0
-           :geometry (geometry :x &quot;0%&quot;
-                               :y &quot;20px&quot;
-                               :width &quot;90%&quot;
-                               :height &quot;30px&quot;
-                               :anchor &quot;top center&quot;)
-           :stacking &quot;fg&quot;
-           :reserve (struts :distance &quot;40px&quot; :side &quot;top&quot;)
-           :windowtype &quot;dock&quot;
-           :wm-ignore false
-  &quot;example content&quot;)
+<pre><code class="language-js">defwindow(&quot;example&quot;, #{
+    monitor: 0,
+    windowtype: &quot;dock&quot;,
+    stacking: &quot;fg&quot;,
+    wm_ignore: false,
+    geometry: #{
+      x: &quot;0%&quot;,
+      y: &quot;2px&quot;,
+      width: &quot;90%&quot;,
+      height: &quot;30px&quot;,
+      anchor: &quot;top center&quot;
+    },
+    reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
+}, root_widget())
 </code></pre>
 <p>Here, we are defining a window named <code>example</code>, which we then define a set of properties for. Additionally, we set the content of the window to be the text <code>&quot;example content&quot;</code>.</p>
 <p>You can now open your first window by running <code>eww open example</code>! Glorious!</p>
@@ -288,7 +296,7 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
 <h4 id="x11"><a class="header" href="#x11">X11</a></h4>
 <table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
 <tr><td align="right"><code>stacking</code></td><td>Where the window should appear in the stack. Possible values: <code>fg</code>, <code>bg</code>.</td></tr>
-<tr><td align="right"><code>wm-ignore</code></td><td>Whether the window manager should ignore this window. This is useful for dashboard-style widgets that don't need to interact with other windows at all. Note that this makes some of the other properties not have any effect. Either <code>true</code> or <code>false</code>.</td></tr>
+<tr><td align="right"><code>wm_ignore</code></td><td>Whether the window manager should ignore this window. This is useful for dashboard-style widgets that don't need to interact with other windows at all. Note that this makes some of the other properties not have any effect. Either <code>true</code> or <code>false</code>.</td></tr>
 <tr><td align="right"><code>reserve</code></td><td>Specify how the window manager should make space for your window. This is useful for bars, which should not overlap any other windows.</td></tr>
 <tr><td align="right"><code>windowtype</code></td><td>Specify what type of window this is. This will be used by your window manager to determine how it should handle your window. Possible values: <code>normal</code>, <code>dock</code>, <code>toolbar</code>, <code>dialog</code>, <code>desktop</code>. Default: <code>dock</code> if <code>reserve</code> is specified, <code>normal</code> otherwise.</td></tr>
 </tbody></table>
@@ -629,302 +637,13 @@ or use the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a>.</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="magic-variables"><a class="header" href="#magic-variables">Magic variables</a></h1>
 <p>These are variables that are always there, without you having to import them.</p>
 <p>The delay between all the updating variables except <code>EWW_TIME</code> is 2s, for <code>EWW_TIME</code> it is 1s.</p>
-<h3 id="eww_temps"><a class="header" href="#eww_temps"><code>EWW_TEMPS</code></a></h3>
-<p>Heat of the components in degree Celsius</p>
-<h4 id="structure"><a class="header" href="#structure">Structure</a></h4>
-<pre><code>{ &lt;name&gt;: temperature }
-</code></pre>
-<h3 id="eww_ram"><a class="header" href="#eww_ram"><code>EWW_RAM</code></a></h3>
-<p>Information on ram and swap usage in bytes.</p>
-<h4 id="structure-1"><a class="header" href="#structure-1">Structure</a></h4>
-<pre><code>{ total_mem, free_mem, total_swap, free_swap, available_mem, used_mem, used_mem_perc }
-</code></pre>
-<h3 id="eww_disk"><a class="header" href="#eww_disk"><code>EWW_DISK</code></a></h3>
-<p>Information on on all mounted partitions (Might report inaccurately on some filesystems, like btrfs and zfs) Example: <code>{EWW_DISK[&quot;/&quot;]}</code></p>
-<h4 id="structure-2"><a class="header" href="#structure-2">Structure</a></h4>
-<pre><code>{ &lt;mount_point&gt;: { name, total, free, used, used_perc } }
-</code></pre>
-<h3 id="eww_battery"><a class="header" href="#eww_battery"><code>EWW_BATTERY</code></a></h3>
-<p>Battery capacity in percent of the main battery</p>
-<h4 id="structure-3"><a class="header" href="#structure-3">Structure</a></h4>
-<pre><code>{ &lt;name&gt;: { capacity, status } }
-</code></pre>
-<h3 id="eww_cpu"><a class="header" href="#eww_cpu"><code>EWW_CPU</code></a></h3>
-<p>Information on the CPU cores: frequency and usage (No MacOS support)</p>
-<h4 id="structure-4"><a class="header" href="#structure-4">Structure</a></h4>
-<pre><code>{ cores: [{ core, freq, usage }], avg }
-</code></pre>
-<h3 id="eww_net"><a class="header" href="#eww_net"><code>EWW_NET</code></a></h3>
-<p>Bytes up/down on all interfaces</p>
-<h4 id="structure-5"><a class="header" href="#structure-5">Structure</a></h4>
-<pre><code>{ &lt;name&gt;: { up, down } }
-</code></pre>
-<h3 id="eww_time"><a class="header" href="#eww_time"><code>EWW_TIME</code></a></h3>
-<p>the current UNIX timestamp</p>
-<h3 id="eww_config_dir"><a class="header" href="#eww_config_dir"><code>EWW_CONFIG_DIR</code></a></h3>
-<p>Path to the eww configuration of the current process</p>
-<h3 id="eww_cmd"><a class="header" href="#eww_cmd"><code>EWW_CMD</code></a></h3>
-<p>eww command running in the current configuration, useful in event handlers. I.e.: <code>:onclick &quot;${EWW_CMD} update foo=bar&quot;</code></p>
-<h3 id="eww_executable"><a class="header" href="#eww_executable"><code>EWW_EXECUTABLE</code></a></h3>
-<p>Full path of the eww executable</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="widgets"><a class="header" href="#widgets">Widgets</a></h1>
-<h2 id="widget"><a class="header" href="#widget"><code>widget</code></a></h2>
-<p>these properties apply to <em>all</em> widgets, and can be used anywhere!</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>class</code></strong>: <em><code>string</code></em> css class name</li>
-<li><strong><code>valign</code></strong>: <em><code>string</code></em> how to align this vertically. possible values: &quot;fill&quot;, &quot;baseline&quot;, &quot;center&quot;, &quot;start&quot;, &quot;end&quot;</li>
-<li><strong><code>halign</code></strong>: <em><code>string</code></em> how to align this horizontally. possible values: &quot;fill&quot;, &quot;baseline&quot;, &quot;center&quot;, &quot;start&quot;, &quot;end&quot;</li>
-<li><strong><code>vexpand</code></strong>: <em><code>bool</code></em> should this container expand vertically. Default: false.</li>
-<li><strong><code>hexpand</code></strong>: <em><code>bool</code></em> should this widget expand horizontally. Default: false.</li>
-<li><strong><code>width</code></strong>: <em><code>int</code></em> width of this element. note that this can not restrict the size if the contents stretch it</li>
-<li><strong><code>height</code></strong>: <em><code>int</code></em> height of this element. note that this can not restrict the size if the contents stretch it</li>
-<li><strong><code>active</code></strong>: <em><code>bool</code></em> If this widget can be interacted with</li>
-<li><strong><code>tooltip</code></strong>: <em><code>string</code></em> tooltip text (on hover)</li>
-<li><strong><code>visible</code></strong>: <em><code>bool</code></em> visibility of the widget</li>
-<li><strong><code>style</code></strong>: <em><code>string</code></em> inline scss style applied to the widget</li>
-<li><strong><code>css</code></strong>: <em><code>string</code></em> scss code applied to the widget, i.e.: <code>button {color: red;}</code></li>
-</ul>
-<h2 id="combo-box-text"><a class="header" href="#combo-box-text"><code>combo-box-text</code></a></h2>
-<p>A combo box allowing the user to choose between several items.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>items</code></strong>: <em><code>vec</code></em> Items that should be displayed in the combo box</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command: Default: &quot;200ms&quot;</li>
-<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when a item was selected, replacing {} with the item as a string</li>
-</ul>
-<h2 id="expander"><a class="header" href="#expander"><code>expander</code></a></h2>
-<p>A widget that can expand and collapse, showing/hiding it's children. Should contain</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>name</code></strong>: <em><code>string</code></em> name of the expander</li>
-<li><strong><code>expanded</code></strong>: <em><code>bool</code></em> sets if the tree is expanded</li>
-</ul>
-<h2 id="revealer"><a class="header" href="#revealer"><code>revealer</code></a></h2>
-<p>A widget that can reveal a child with an animation.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>transition</code></strong>: <em><code>string</code></em> the name of the transition. Possible values: &quot;slideright&quot;, &quot;slideleft&quot;, &quot;slideup&quot;, &quot;slidedown&quot;, &quot;crossfade&quot;, &quot;none&quot;</li>
-<li><strong><code>reveal</code></strong>: <em><code>bool</code></em> sets if the child is revealed or not</li>
-<li><strong><code>duration</code></strong>: <em><code>duration</code></em> the duration of the reveal transition. Default: &quot;500ms&quot;</li>
-</ul>
-<h2 id="a-checkbox"><a class="header" href="#a-checkbox"><code>a checkbox</code></a></h2>
-<p>A checkbox that can trigger events on checked / unchecked.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>checked</code></strong>: <em><code>bool</code></em> whether the checkbox is toggled or not when created</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-<li><strong><code>onchecked</code></strong>: <em><code>string</code></em> action (command) to be executed when checked by the user</li>
-<li><strong><code>onunchecked</code></strong>: <em><code>string</code></em> similar to onchecked but when the widget is unchecked</li>
-</ul>
-<h2 id="color-button"><a class="header" href="#color-button"><code>color-button</code></a></h2>
-<p>A button opening a color chooser window</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>use-alpha</code></strong>: <em><code>bool</code></em> bool to whether or not use alpha</li>
-<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when the color was selected</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-</ul>
-<h2 id="color-chooser"><a class="header" href="#color-chooser"><code>color-chooser</code></a></h2>
-<p>A color chooser widget</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>use-alpha</code></strong>: <em><code>bool</code></em> bool to wether or not use alpha</li>
-<li><strong><code>onchange</code></strong>: <em><code>string</code></em> runs the code when the color was selected</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-</ul>
-<h2 id="scale"><a class="header" href="#scale"><code>scale</code></a></h2>
-<p>A slider.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>flipped</code></strong>: <em><code>bool</code></em> flip the direction</li>
-<li><strong><code>marks</code></strong>: <em><code>string</code></em> draw marks</li>
-<li><strong><code>draw-value</code></strong>: <em><code>bool</code></em> draw the value of the property</li>
-<li><strong><code>value-pos</code></strong>: <em><code>string</code></em> position of the drawn value. possible values: &quot;left&quot;, &quot;right&quot;, &quot;top&quot;, &quot;bottom&quot;</li>
-<li><strong><code>round-digits</code></strong>: <em><code>int</code></em> Sets the number of decimals to round the value to when it changes</li>
-<li><strong><code>value</code></strong>: <em><code>float</code></em> the value</li>
-<li><strong><code>min</code></strong>: <em><code>float</code></em> the minimum value</li>
-<li><strong><code>max</code></strong>: <em><code>float</code></em> the maximum value</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-<li><strong><code>onchange</code></strong>: <em><code>string</code></em> command executed once the value is changes. The placeholder <code>{}</code>, used in the command will be replaced by the new value.</li>
-<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the widget. Possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
-</ul>
-<h2 id="progress"><a class="header" href="#progress"><code>progress</code></a></h2>
-<p>A progress bar. HINT: for the <code>width</code> property to work, you may need to set the <code>min-width</code> of <code>progressbar &gt; trough</code> in your css.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>flipped</code></strong>: <em><code>bool</code></em> flip the direction</li>
-<li><strong><code>value</code></strong>: <em><code>float</code></em> value of the progress bar (between 0-100)</li>
-<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the progress bar. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
-</ul>
-<h2 id="input"><a class="header" href="#input"><code>input</code></a></h2>
-<p>An input field. For this to be useful, set <code>focusable=&quot;true&quot;</code> on the window.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>value</code></strong>: <em><code>string</code></em> the content of the text field</li>
-<li><strong><code>onchange</code></strong>: <em><code>string</code></em> Command to run when the text changes. The placeholder <code>{}</code> will be replaced by the value</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-<li><strong><code>onaccept</code></strong>: <em><code>string</code></em> Command to run when the user hits return in the input field. The placeholder <code>{}</code> will be replaced by the value</li>
-<li><strong><code>password</code></strong>: <em><code>bool</code></em> if the input is obscured</li>
-</ul>
-<h2 id="button"><a class="header" href="#button"><code>button</code></a></h2>
-<p>A button containing any widget as it's child. Events are triggered on release.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the button is activated either by leftclicking or keyboard</li>
-<li><strong><code>onmiddleclick</code></strong>: <em><code>string</code></em> command to run when the button is middleclicked</li>
-<li><strong><code>onrightclick</code></strong>: <em><code>string</code></em> command to run when the button is rightclicked</li>
-</ul>
-<h2 id="image"><a class="header" href="#image"><code>image</code></a></h2>
-<p>A widget displaying an image</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>path</code></strong>: <em><code>string</code></em> path to the image file</li>
-<li><strong><code>image-width</code></strong>: <em><code>int</code></em> width of the image</li>
-<li><strong><code>image-height</code></strong>: <em><code>int</code></em> height of the image</li>
-<li><strong><code>preserve-aspect-ratio</code></strong>: <em><code>bool</code></em> whether to keep the aspect ratio when resizing an image. Default: true, false doesn't work for all image types</li>
-<li><strong><code>fill-svg</code></strong>: <em><code>string</code></em> sets the color of svg images</li>
-<li><strong><code>icon</code></strong>: <em><code>string</code></em> name of a theme icon</li>
-<li><strong><code>icon-size</code></strong>: <em><code>string</code></em> size of the theme icon</li>
-</ul>
-<h2 id="box"><a class="header" href="#box"><code>box</code></a></h2>
-<p>the main layout container</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>spacing</code></strong>: <em><code>int</code></em> spacing between elements</li>
-<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the box. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
-<li><strong><code>space-evenly</code></strong>: <em><code>bool</code></em> space the widgets evenly.</li>
-</ul>
-<h2 id="overlay"><a class="header" href="#overlay"><code>overlay</code></a></h2>
-<p>a widget that places its children on top of each other. The overlay widget takes the size of its first child.</p>
-<p><strong>Properties</strong></p>
-<h2 id="tooltip"><a class="header" href="#tooltip"><code>tooltip</code></a></h2>
-<p>A widget that have a custom tooltip. The first child is the content of the tooltip, the second one is the content of the widget.</p>
-<p><strong>Properties</strong></p>
-<h2 id="centerbox"><a class="header" href="#centerbox"><code>centerbox</code></a></h2>
-<p>a box that must contain exactly three children, which will be layed out at the start, center and end of the container.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the centerbox. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
-</ul>
-<h2 id="scroll"><a class="header" href="#scroll"><code>scroll</code></a></h2>
-<p>a container with a single child that can scroll.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>hscroll</code></strong>: <em><code>bool</code></em> scroll horizontally</li>
-<li><strong><code>vscroll</code></strong>: <em><code>bool</code></em> scroll vertically</li>
-</ul>
-<h2 id="eventbox"><a class="header" href="#eventbox"><code>eventbox</code></a></h2>
-<p>a container which can receive events and must contain exactly one child. Supports <code>:hover</code> and <code>:active</code> css selectors.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-<li><strong><code>onscroll</code></strong>: <em><code>string</code></em> event to execute when the user scrolls with the mouse over the widget. The placeholder <code>{}</code> used in the command will be replaced with either <code>up</code> or <code>down</code>.</li>
-<li><strong><code>onhover</code></strong>: <em><code>string</code></em> event to execute when the user hovers over the widget</li>
-<li><strong><code>onhoverlost</code></strong>: <em><code>string</code></em> event to execute when the user losts hovers over the widget</li>
-<li><strong><code>cursor</code></strong>: <em><code>string</code></em> Cursor to show while hovering (see <a href="https://docs.gtk.org/gdk3/ctor.Cursor.new_from_name.html">gtk3-cursors</a> for possible names)</li>
-<li><strong><code>ondropped</code></strong>: <em><code>string</code></em> Command to execute when something is dropped on top of this element. The placeholder <code>{}</code> used in the command will be replaced with the uri to the dropped thing.</li>
-<li><strong><code>dragvalue</code></strong>: <em><code>string</code></em> URI that will be provided when dragging from this widget</li>
-<li><strong><code>dragtype</code></strong>: <em><code>string</code></em> Type of value that should be dragged from this widget. Possible values: &quot;file&quot;, &quot;text&quot;</li>
-<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the widget is clicked</li>
-<li><strong><code>onmiddleclick</code></strong>: <em><code>string</code></em> command to run when the widget is middleclicked</li>
-<li><strong><code>onrightclick</code></strong>: <em><code>string</code></em> command to run when the widget is rightclicked</li>
-</ul>
-<h2 id="label"><a class="header" href="#label"><code>label</code></a></h2>
-<p>A text widget giving you more control over how the text is displayed</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>text</code></strong>: <em><code>string</code></em> the text to display</li>
-<li><strong><code>truncate</code></strong>: <em><code>bool</code></em> whether to truncate text (or pango markup). If <code>show-truncated</code> is <code>false</code>, or if <code>limit-width</code> has a value, this property has no effect and truncation is enabled.</li>
-<li><strong><code>limit-width</code></strong>: <em><code>int</code></em> maximum count of characters to display</li>
-<li><strong><code>truncate-left</code></strong>: <em><code>bool</code></em> whether to truncate on the left side</li>
-<li><strong><code>show-truncated</code></strong>: <em><code>bool</code></em> show whether the text was truncated. Disabling it will also disable dynamic truncation (the labels won't be truncated more than <code>limit-width</code>, even if there is not enough space for them), and will completly disable truncation on pango markup.</li>
-<li><strong><code>unindent</code></strong>: <em><code>bool</code></em> whether to remove leading spaces</li>
-<li><strong><code>markup</code></strong>: <em><code>string</code></em> Pango markup to display</li>
-<li><strong><code>wrap</code></strong>: <em><code>bool</code></em> Wrap the text. This mainly makes sense if you set the width of this widget.</li>
-<li><strong><code>angle</code></strong>: <em><code>float</code></em> the angle of rotation for the label (between 0 - 360)</li>
-<li><strong><code>gravity</code></strong>: <em><code>string</code></em> the gravity of the string (south, east, west, north, auto). Text will want to face the direction of gravity.</li>
-<li><strong><code>xalign</code></strong>: <em><code>float</code></em> the alignment of the label text on the x axis (between 0 - 1, 0 -&gt; left, 0.5 -&gt; center, 1 -&gt; right)</li>
-<li><strong><code>yalign</code></strong>: <em><code>float</code></em> the alignment of the label text on the y axis (between 0 - 1, 0 -&gt; bottom, 0.5 -&gt; center, 1 -&gt; top)</li>
-<li><strong><code>justify</code></strong>: <em><code>string</code></em> the justification of the label text (left, right, center, fill)</li>
-<li><strong><code>wrap-mode</code></strong>: <em><code>string</code></em> how text is wrapped. possible options: &quot;word&quot;, &quot;char&quot;, &quot;wordchar&quot;</li>
-<li><strong><code>lines</code></strong>: <em><code>int</code></em> maximum number of lines to display (only works when <code>limit-width</code> has a value). A value of -1 (default) disables the limit.</li>
-</ul>
-<h2 id="literal"><a class="header" href="#literal"><code>literal</code></a></h2>
-<p>A widget that allows you to render arbitrary yuck.</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>content</code></strong>: <em><code>string</code></em> inline yuck that will be rendered as a widget.</li>
-</ul>
-<h2 id="calendar"><a class="header" href="#calendar"><code>calendar</code></a></h2>
-<p>A widget that displays a calendar</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>day</code></strong>: <em><code>float</code></em> the selected day</li>
-<li><strong><code>month</code></strong>: <em><code>float</code></em> the selected month</li>
-<li><strong><code>year</code></strong>: <em><code>float</code></em> the selected year</li>
-<li><strong><code>show-details</code></strong>: <em><code>bool</code></em> show details</li>
-<li><strong><code>show-heading</code></strong>: <em><code>bool</code></em> show heading line</li>
-<li><strong><code>show-day-names</code></strong>: <em><code>bool</code></em> show names of days</li>
-<li><strong><code>show-week-numbers</code></strong>: <em><code>bool</code></em> show week numbers</li>
-<li><strong><code>onclick</code></strong>: <em><code>string</code></em> command to run when the user selects a date. The <code>{0}</code> placeholder will be replaced by the selected day, <code>{1}</code> will be replaced by the month, and <code>{2}</code> by the year.</li>
-<li><strong><code>timeout</code></strong>: <em><code>duration</code></em> timeout of the command. Default: &quot;200ms&quot;</li>
-</ul>
-<h2 id="stack"><a class="header" href="#stack"><code>stack</code></a></h2>
-<p>A widget that displays one of its children at a time</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>selected</code></strong>: <em><code>int</code></em> index of child which should be shown</li>
-<li><strong><code>transition</code></strong>: <em><code>string</code></em> the name of the transition. Possible values: &quot;slideright&quot;, &quot;slideleft&quot;, &quot;slideup&quot;, &quot;slidedown&quot;, &quot;crossfade&quot;, &quot;none&quot;</li>
-<li><strong><code>same-size</code></strong>: <em><code>bool</code></em> sets whether all children should be the same size</li>
-</ul>
-<h2 id="transform"><a class="header" href="#transform"><code>transform</code></a></h2>
-<p>A widget that applies transformations to its content. They are applied in the following order: rotate -&gt; translate -&gt; scale</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>rotate</code></strong>: <em><code>float</code></em> the percentage to rotate</li>
-<li><strong><code>transform-origin-x</code></strong>: <em><code>string</code></em> x coordinate of origin of transformation (px or %)</li>
-<li><strong><code>transform-origin-y</code></strong>: <em><code>string</code></em> y coordinate of origin of transformation (px or %)</li>
-<li><strong><code>translate-x</code></strong>: <em><code>string</code></em> the amount to translate in the x direction (px or %)</li>
-<li><strong><code>translate-y</code></strong>: <em><code>string</code></em> the amount to translate in the y direction (px or %)</li>
-<li><strong><code>scale-x</code></strong>: <em><code>string</code></em> the amount to scale in the x direction (px or %)</li>
-<li><strong><code>scale-y</code></strong>: <em><code>string</code></em> the amount to scale in the y direction (px or %)</li>
-</ul>
-<h2 id="circular-progress"><a class="header" href="#circular-progress"><code>circular-progress</code></a></h2>
-<p>A widget that displays a circular progress bar</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>value</code></strong>: <em><code>float</code></em> the value, between 0 - 100</li>
-<li><strong><code>start-at</code></strong>: <em><code>float</code></em> the percentage that the circle should start at</li>
-<li><strong><code>thickness</code></strong>: <em><code>float</code></em> the thickness of the circle</li>
-<li><strong><code>clockwise</code></strong>: <em><code>bool</code></em> wether the progress bar spins clockwise or counter clockwise</li>
-</ul>
-<h2 id="graph"><a class="header" href="#graph"><code>graph</code></a></h2>
-<p>A widget that displays a graph showing how a given value changes over time</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>value</code></strong>: <em><code>float</code></em> the value, between 0 - 100</li>
-<li><strong><code>thickness</code></strong>: <em><code>float</code></em> the thickness of the line</li>
-<li><strong><code>time-range</code></strong>: <em><code>duration</code></em> the range of time to show</li>
-<li><strong><code>min</code></strong>: <em><code>float</code></em> the minimum value to show (defaults to 0 if value_max is provided)</li>
-<li><strong><code>max</code></strong>: <em><code>float</code></em> the maximum value to show</li>
-<li><strong><code>dynamic</code></strong>: <em><code>bool</code></em> whether the y range should dynamically change based on value</li>
-<li><strong><code>line-style</code></strong>: <em><code>string</code></em> changes the look of the edges in the graph. Values: &quot;miter&quot; (default), &quot;round&quot;,</li>
-<li><strong><code>flip-x</code></strong>: <em><code>bool</code></em> whether the x axis should go from high to low</li>
-<li><strong><code>flip-y</code></strong>: <em><code>bool</code></em> whether the y axis should go from high to low</li>
-<li><strong><code>vertical</code></strong>: <em><code>bool</code></em> if set to true, the x and y axes will be exchanged</li>
-</ul>
-<h2 id="systray"><a class="header" href="#systray"><code>systray</code></a></h2>
-<p>Tray for system notifier icons</p>
-<p><strong>Properties</strong></p>
-<ul>
-<li><strong><code>spacing</code></strong>: <em><code>int</code></em> spacing between elements</li>
-<li><strong><code>orientation</code></strong>: <em><code>string</code></em> orientation of the box. possible values: &quot;vertical&quot;, &quot;v&quot;, &quot;horizontal&quot;, &quot;h&quot;</li>
-<li><strong><code>space-evenly</code></strong>: <em><code>bool</code></em> space the widgets evenly.</li>
-<li><strong><code>icon-size</code></strong>: <em><code>int</code></em> size of icons in the tray</li>
-<li><strong><code>prepend-new</code></strong>: <em><code>bool</code></em> prepend new icons.</li>
-</ul>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="example-configurations"><a class="header" href="#example-configurations">Example Configurations</a></h2>
+<p>These configurations of eww are available in the <code>examples/</code> directory of the <a href="https://github.com/elkowar/eww">repo</a>.</p>
+<p>An eww bar configuration:
+<img src="https://github.com/elkowar/eww/raw/master/examples/eww-bar/eww-bar.png" alt="Example bar" /></p>
+<p>A demo on how to declare and use data structures:</p>
+<p><img src="https://github.com/elkowar/eww/raw/master/examples/data-structures/data-structures-preview.png" alt="Data structure example" /></p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h1>
 <p>Here you will find help if something doesn't work. If the issue isn't listed here, please <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo.</a></p>
 <h2 id="eww-does-not-compile"><a class="header" href="#eww-does-not-compile">Eww does not compile</a></h2>
@@ -955,12 +674,6 @@ or use the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a>.</p>
 <li>Sometimes hot reloading doesn't work. In that case, you can make use of <code>eww reload</code> manually.</li>
 </ul>
 <p>Remember, if your issue isn't listed here, <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo</a>.</p>
-<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h2 id="example-configurations"><a class="header" href="#example-configurations">Example Configurations</a></h2>
-<p>These configurations of eww are available in the <code>examples/</code> directory of the <a href="https://github.com/elkowar/eww">repo</a>.</p>
-<p>An eww bar configuration:
-<img src="https://github.com/elkowar/eww/raw/master/examples/eww-bar/eww-bar.png" alt="Example bar" /></p>
-<p>A demo on how to declare and use data structures:</p>
-<p><img src="https://github.com/elkowar/eww/raw/master/examples/data-structures/data-structures-preview.png" alt="Data structure example" /></p>
 
                     </main>
 

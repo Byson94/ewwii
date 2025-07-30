@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="eww.html">Eww - Widgets for everyone!</a></li><li class="chapter-item expanded "><a href="configuration.html" class="active">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Eww expressions</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">Theming with GTK</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="eww.html">Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html">Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html" class="active">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,39 +169,39 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="writing-your-eww-configuration"><a class="header" href="#writing-your-eww-configuration">Writing your eww configuration</a></h1>
-<p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>),  see <a href="widgets.html">Widget Documentation</a>.)<br />
-Eww is configured using its own language called <code>yuck</code>.
-Using yuck, you declare the structure and content of your widgets, the geometry, position, and behavior of any windows,
+                        <h1 id="writing-your-ewwii-configuration"><a class="header" href="#writing-your-ewwii-configuration">Writing your ewwii configuration</a></h1>
+<p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>), see <a href="widgets.html">Widget Documentation</a>.)<br />
+Eww is configured using its own language called <code>rhai</code>.
+Using rhai, you declare the structure and content of your widgets, the geometry, position, and behavior of any windows,
 as well as any state and data that will be used in your widgets.
-Yuck is based around S-expressions, which you may know from lisp-like languages.
-If you're using vim, you can make use of <a href="https://github.com/elkowar/yuck.vim">yuck.vim</a> for editor support.
-If you're using VSCode, you can get syntax highlighting and formatting from <a href="https://marketplace.visualstudio.com/items?itemName=eww-yuck.yuck">yuck-vscode</a>.
-It is also recommended to use <a href="https://shaunlebron.github.io/parinfer/">parinfer</a>,
-which makes working with S-expressions delightfully easy!</p>
+Rhai is based around imparative syntax, which you may know from programming languages like C, Rust etc.
+If you're using vim, you can make use of <a href="https://github.com/rhaiscript/vim-rhai">vim-rhai</a> for editor support.
+If you're using VSCode, you can get syntax highlighting and formatting from <a href="https://marketplace.visualstudio.com/items?itemName=rhaiscript.vscode-rhai">vscode-rhai</a>.</p>
 <p>Additionally, any styles are defined in CSS or SCSS (which is mostly just slightly improved CSS syntax).
 While eww supports a significant portion of the CSS you know from the web,
 not everything is supported, as eww relies on GTK's own CSS engine.
 Notably, some animation features are unsupported,
 as well as most layout-related CSS properties such as flexbox, <code>float</code>, absolute position or <code>width</code>/<code>height</code>.</p>
-<p>To get started, you'll need to create two files: <code>eww.yuck</code> and <code>eww.scss</code> (or <code>eww.css</code>, if you prefer).
-These files must be placed under <code>$XDG_CONFIG_HOME/eww</code> (this is most likely <code>~/.config/eww</code>).</p>
+<p>To get started, you'll need to create two files: <code>ewwii.rhai</code> and <code>ewwii.scss</code> (or <code>ewwii.css</code>, if you prefer).
+These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is most likely <code>~/.config/ewwii</code>).</p>
 <p>Now that those files are created, you can start writing your first widget!</p>
 <h2 id="creating-your-first-window"><a class="header" href="#creating-your-first-window">Creating your first window</a></h2>
 <p>Firstly, you will need to create a top-level window. Here, you configure things such as the name, position, geometry, and content of your window.</p>
 <p>Let's look at an example window definition:</p>
-<pre><code class="language-lisp">(defwindow example
-           :monitor 0
-           :geometry (geometry :x &quot;0%&quot;
-                               :y &quot;20px&quot;
-                               :width &quot;90%&quot;
-                               :height &quot;30px&quot;
-                               :anchor &quot;top center&quot;)
-           :stacking &quot;fg&quot;
-           :reserve (struts :distance &quot;40px&quot; :side &quot;top&quot;)
-           :windowtype &quot;dock&quot;
-           :wm-ignore false
-  &quot;example content&quot;)
+<pre><code class="language-js">defwindow(&quot;example&quot;, #{
+    monitor: 0,
+    windowtype: &quot;dock&quot;,
+    stacking: &quot;fg&quot;,
+    wm_ignore: false,
+    geometry: #{
+      x: &quot;0%&quot;,
+      y: &quot;2px&quot;,
+      width: &quot;90%&quot;,
+      height: &quot;30px&quot;,
+      anchor: &quot;top center&quot;
+    },
+    reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
+}, root_widget())
 </code></pre>
 <p>Here, we are defining a window named <code>example</code>, which we then define a set of properties for. Additionally, we set the content of the window to be the text <code>&quot;example content&quot;</code>.</p>
 <p>You can now open your first window by running <code>eww open example</code>! Glorious!</p>
@@ -229,7 +229,7 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
 <h4 id="x11"><a class="header" href="#x11">X11</a></h4>
 <table><thead><tr><th align="right">Property</th><th>Description</th></tr></thead><tbody>
 <tr><td align="right"><code>stacking</code></td><td>Where the window should appear in the stack. Possible values: <code>fg</code>, <code>bg</code>.</td></tr>
-<tr><td align="right"><code>wm-ignore</code></td><td>Whether the window manager should ignore this window. This is useful for dashboard-style widgets that don't need to interact with other windows at all. Note that this makes some of the other properties not have any effect. Either <code>true</code> or <code>false</code>.</td></tr>
+<tr><td align="right"><code>wm_ignore</code></td><td>Whether the window manager should ignore this window. This is useful for dashboard-style widgets that don't need to interact with other windows at all. Note that this makes some of the other properties not have any effect. Either <code>true</code> or <code>false</code>.</td></tr>
 <tr><td align="right"><code>reserve</code></td><td>Specify how the window manager should make space for your window. This is useful for bars, which should not overlap any other windows.</td></tr>
 <tr><td align="right"><code>windowtype</code></td><td>Specify what type of window this is. This will be used by your window manager to determine how it should handle your window. Possible values: <code>normal</code>, <code>dock</code>, <code>toolbar</code>, <code>dialog</code>, <code>desktop</code>. Default: <code>dock</code> if <code>reserve</code> is specified, <code>normal</code> otherwise.</td></tr>
 </tbody></table>
@@ -461,7 +461,7 @@ This launches a separate instance of the eww daemon that has separate logs and s
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="eww.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="concepts.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
@@ -479,7 +479,7 @@ This launches a separate instance of the eww daemon that has separate logs and s
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="eww.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="concepts.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
