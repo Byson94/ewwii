@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="eww.html">Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html">Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html"><strong aria-hidden="true">2.3.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.4.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">3.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">4.</strong> Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">5.</strong> Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -176,9 +176,12 @@
 is a widget system made in <a href="https://www.rust-lang.org/">Rust</a>,
 which lets you create your own widgets similarly to how you can in AwesomeWM.
 The key difference: It is independent of your window manager!</p>
-<p>Configured in yuck and themed using CSS, it is easy to customize and provides all the flexibility you need!</p>
-<h2 id="how-to-install-eww"><a class="header" href="#how-to-install-eww">How to install Eww</a></h2>
-<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<p>Ewwii is configured in <a href="https://rhai.rs/">Rhai</a> and themed using <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> or <a href="https://en.wikipedia.org/wiki/Sass_(style_sheet_language)">SCSS</a>, it is easy to customize and is powerful and dynamic. The main goal of Ewwii is to make configuration easy and to give the user all the power that they need.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
+<p>Getting starting with Ewwii. This section will cover how you can install and use ewwii.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>The first step of using Ewwii is installing it. You would need to have the following prerequesties installed on your system to build/install ewwii.</p>
+<p><strong>Prerequesties:</strong></p>
 <ul>
 <li>rustc</li>
 <li>cargo</li>
@@ -189,7 +192,7 @@ I <strong>strongly</strong> recommend installing it using <a href="https://rustu
 The exact names of the packages that provide these may differ depending on your distribution.
 The following list of package names should work for arch linux:</p>
 <details>
-<summary>Packages</summary>
+<summary><strong>Packages (click here)</strong></summary>
 <ul>
 <li>gtk3 (libgdk-3, libgtk-3)</li>
 <li>gtk-layer-shell (only on Wayland)</li>
@@ -202,9 +205,11 @@ The following list of package names should work for arch linux:</p>
 <li>glibc</li>
 </ul>
 </details>
-<p>(Note that you will most likely need the -devel variants of your distro's packages to be able to compile eww.)</p>
-<h3 id="building"><a class="header" href="#building">Building</a></h3>
-<p>Once you have the prerequisites ready, you're ready to install and build eww.</p>
+<blockquote>
+<p><strong>Note</strong> that you will most likely need the -devel variants of your distro's packages to be able to compile ewwii.</p>
+</blockquote>
+<h2 id="building"><a class="header" href="#building">Building</a></h2>
+<p>Once you have the prerequisites ready, you're ready to install and build ewwii.</p>
 <p>First clone the repo:</p>
 <pre><code class="language-bash">git clone https://github.com/byson94/ewwii
 </code></pre>
@@ -217,7 +222,7 @@ The following list of package names should work for arch linux:</p>
 When you're on Wayland, build with:</p>
 <pre><code class="language-bash">cargo build --release --no-default-features --features=wayland
 </code></pre>
-<h3 id="running-eww"><a class="header" href="#running-eww">Running eww</a></h3>
+<h2 id="running-ewwii"><a class="header" href="#running-ewwii">Running ewwii</a></h2>
 <p>Once you've built it you can now run it by entering:</p>
 <pre><code class="language-bash">cd target/release
 </code></pre>
@@ -225,8 +230,13 @@ When you're on Wayland, build with:</p>
 <pre><code class="language-bash">chmod +x ./ewwii
 </code></pre>
 <p>Then to run it, enter:</p>
-<pre><code>./ewwii daemon
+<pre><code class="language-bash">./ewwii daemon
 ./ewwii open &lt;window_name&gt;
+</code></pre>
+<h2 id="installing-via-package-managers"><a class="header" href="#installing-via-package-managers">Installing via package managers</a></h2>
+<p>If you don't want to go through the <em>very</em> tedious task of cloning and building ewwii, you can install it using Cargo (Rust crate manager).</p>
+<p>You can run the following command to install ewwii from cargo:</p>
+<pre><code class="language-bash">cargo install --git https://github.com/byson94/ewwii
 </code></pre>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="core-concepts"><a class="header" href="#core-concepts">Core Concepts</a></h1>
 <p>The core concepts of ewwii include its configuration, expressions, theming and magic variables.</p>
@@ -645,35 +655,35 @@ or use the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a>.</p>
 <p>A demo on how to declare and use data structures:</p>
 <p><img src="https://github.com/elkowar/eww/raw/master/examples/data-structures/data-structures-preview.png" alt="Data structure example" /></p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h1>
-<p>Here you will find help if something doesn't work. If the issue isn't listed here, please <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo.</a></p>
-<h2 id="eww-does-not-compile"><a class="header" href="#eww-does-not-compile">Eww does not compile</a></h2>
+<p>Here you will find help if something doesn't work. If the issue isn't listed here, please <a href="https://github.com/byson94/ewwii/issues">open an issue on the GitHub repo.</a></p>
+<h2 id="ewwii-does-not-compile"><a class="header" href="#ewwii-does-not-compile">Ewwii does not compile</a></h2>
 <ol>
-<li>Make sure that you are compiling eww using a recent version of rust (run <code>rustup update</code> to be sure you have the latest version available)</li>
+<li>Make sure that you are compiling ewwii using a recent version of rust (run <code>rustup update</code> to be sure you have the latest version available)</li>
 <li>Make sure you have all the necessary dependencies. If there are compile-errors, the compiler will tell you what you're missing.</li>
 </ol>
-<h2 id="eww-does-not-work-on-wayland"><a class="header" href="#eww-does-not-work-on-wayland">Eww does not work on Wayland</a></h2>
+<h2 id="ewwii-does-not-work-on-wayland"><a class="header" href="#ewwii-does-not-work-on-wayland">Ewwii does not work on Wayland</a></h2>
 <ol>
-<li>Make sure you compiled eww with the <code>--no-default-features --features=wayland</code> flags.</li>
+<li>Make sure you compiled ewwii with the <code>--no-default-features --features=wayland</code> flags.</li>
 <li>Make sure that you're not trying to use X11-specific features (these are (hopefully) explicitly specified as such in the documentation).</li>
 </ol>
 <h2 id="my-configuration-is-not-loaded-correctly"><a class="header" href="#my-configuration-is-not-loaded-correctly">My configuration is not loaded correctly</a></h2>
 <ol>
-<li>Make sure the <code>eww.yuck</code> and <code>eww.(s)css</code> files are in the correct places.</li>
-<li>Sometimes, eww might fail to load your configuration as a result of a configuration error. Make sure your configuration is valid.</li>
+<li>Make sure the <code>ewwii.rhai</code> and <code>ewwii.(s)css</code> files are in the correct places.</li>
+<li>Sometimes, ewwii might fail to load your configuration as a result of a configuration error. Make sure your configuration is valid.</li>
 </ol>
 <h2 id="something-isnt-styled-correctly"><a class="header" href="#something-isnt-styled-correctly">Something isn't styled correctly!</a></h2>
 <p>Check the <a href="working_with_gtk.html#gtk-debugger">GTK-Debugger</a> to get more insight into what styles GTK is applying to which elements.</p>
 <h2 id="general-issues"><a class="header" href="#general-issues">General issues</a></h2>
 <p>You should try the following things before opening an issue or doing more specialized troubleshooting:</p>
 <ul>
-<li>Kill the eww daemon by running <code>eww kill</code> and re-open your window with the <code>--debug</code>-flag to get additional log output.</li>
-<li>Now you can take a look at the logs by running <code>eww logs</code>.</li>
-<li>Use <code>eww state</code> to see the state of all variables.</li>
-<li>Use <code>eww debug</code> to see the structure of your widget and other information.</li>
-<li>Update to the latest eww version.</li>
-<li>Sometimes hot reloading doesn't work. In that case, you can make use of <code>eww reload</code> manually.</li>
+<li>Kill the ewwii daemon by running <code>ewwii kill</code> and re-open your window with the <code>--debug</code>-flag to get additional log output.</li>
+<li>Now you can take a look at the logs by running <code>ewwii logs</code>.</li>
+<li>Use <code>ewwii state</code> to see the state of all variables.</li>
+<li>Use <code>ewwii debug</code> to see the structure of your widget and other information.</li>
+<li>Update to the latest ewwii version.</li>
+<li>Sometimes hot reloading doesn't work. In that case, you can make use of <code>ewwii reload</code> manually.</li>
 </ul>
-<p>Remember, if your issue isn't listed here, <a href="https://github.com/elkowar/eww/issues">open an issue on the GitHub repo</a>.</p>
+<p>Remember, if your issue isn't listed here, <a href="https://github.com/byson94/ewwii/issues">open an issue on the GitHub repo</a>.</p>
 
                     </main>
 

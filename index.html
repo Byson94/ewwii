@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="eww.html">Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html">Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html">Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html">Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html">GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html">Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html">Widgets</a></li><li class="chapter-item expanded "><a href="examples.html">Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html">Troubleshooting</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html"><strong aria-hidden="true">2.3.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.4.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">3.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">4.</strong> Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">5.</strong> Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -174,58 +174,7 @@
 is a widget system made in <a href="https://www.rust-lang.org/">Rust</a>,
 which lets you create your own widgets similarly to how you can in AwesomeWM.
 The key difference: It is independent of your window manager!</p>
-<p>Configured in yuck and themed using CSS, it is easy to customize and provides all the flexibility you need!</p>
-<h2 id="how-to-install-eww"><a class="header" href="#how-to-install-eww">How to install Eww</a></h2>
-<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
-<ul>
-<li>rustc</li>
-<li>cargo</li>
-</ul>
-<p>Rather than with your system package manager,
-I <strong>strongly</strong> recommend installing it using <a href="https://rustup.rs/">rustup</a>.</p>
-<p>Additionally, eww requires some dynamic libraries to be available on your system.
-The exact names of the packages that provide these may differ depending on your distribution.
-The following list of package names should work for arch linux:</p>
-<details>
-<summary>Packages</summary>
-<ul>
-<li>gtk3 (libgdk-3, libgtk-3)</li>
-<li>gtk-layer-shell (only on Wayland)</li>
-<li>pango (libpango)</li>
-<li>gdk-pixbuf2 (libgdk_pixbuf-2)</li>
-<li>libdbusmenu-gtk3</li>
-<li>cairo (libcairo, libcairo-gobject)</li>
-<li>glib2 (libgio, libglib-2, libgobject-2)</li>
-<li>gcc-libs (libgcc)</li>
-<li>glibc</li>
-</ul>
-</details>
-<p>(Note that you will most likely need the -devel variants of your distro's packages to be able to compile eww.)</p>
-<h3 id="building"><a class="header" href="#building">Building</a></h3>
-<p>Once you have the prerequisites ready, you're ready to install and build eww.</p>
-<p>First clone the repo:</p>
-<pre><code class="language-bash">git clone https://github.com/byson94/ewwii
-</code></pre>
-<pre><code class="language-bash">cd ewwii
-</code></pre>
-<p>Then build:</p>
-<pre><code class="language-bash">cargo build --release --no-default-features --features x11
-</code></pre>
-<p><strong>NOTE:</strong>
-When you're on Wayland, build with:</p>
-<pre><code class="language-bash">cargo build --release --no-default-features --features=wayland
-</code></pre>
-<h3 id="running-eww"><a class="header" href="#running-eww">Running eww</a></h3>
-<p>Once you've built it you can now run it by entering:</p>
-<pre><code class="language-bash">cd target/release
-</code></pre>
-<p>Then make the Eww binary executable:</p>
-<pre><code class="language-bash">chmod +x ./ewwii
-</code></pre>
-<p>Then to run it, enter:</p>
-<pre><code>./ewwii daemon
-./ewwii open &lt;window_name&gt;
-</code></pre>
+<p>Ewwii is configured in <a href="https://rhai.rs/">Rhai</a> and themed using <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> or <a href="https://en.wikipedia.org/wiki/Sass_(style_sheet_language)">SCSS</a>, it is easy to customize and is powerful and dynamic. The main goal of Ewwii is to make configuration easy and to give the user all the power that they need.</p>
 
                     </main>
 
@@ -234,7 +183,7 @@ When you're on Wayland, build with:</p>
                         
 
                         
-                            <a rel="next" href="concepts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="getting_started.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -248,7 +197,7 @@ When you're on Wayland, build with:</p>
                 
 
                 
-                    <a rel="next" href="concepts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="getting_started.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
