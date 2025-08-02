@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html" class="active"><strong aria-hidden="true">2.3.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.4.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">3.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">4.</strong> Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">5.</strong> Troubleshooting</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="config_and_syntax.html"><strong aria-hidden="true">2.</strong> Configuration &amp; Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.3.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="theming_and_ui.html"><strong aria-hidden="true">3.</strong> Theming &amp; UI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="working_with_gtk.html" class="active"><strong aria-hidden="true">3.1.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="styling_widgets.html"><strong aria-hidden="true">3.2.</strong> Styling Widgets</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">4.</strong> Widgets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="defining_widgets.html"><strong aria-hidden="true">4.1.</strong> Defining Widgets</a></li><li class="chapter-item expanded "><a href="layouts.html"><strong aria-hidden="true">4.2.</strong> Window Layouts</a></li><li class="chapter-item expanded "><a href="props.html"><strong aria-hidden="true">4.3.</strong> Widget Properties</a></li></ol></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/layouts.html"><strong aria-hidden="true">5.1.</strong> Common Layouts</a></li><li class="chapter-item expanded "><a href="examples/interactive.html"><strong aria-hidden="true">5.2.</strong> Interactive Widgets</a></li><li class="chapter-item expanded "><a href="examples/theming.html"><strong aria-hidden="true">5.3.</strong> Theming Tricks</a></li></ol></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">6.</strong> Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,35 +169,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="gtk"><a class="header" href="#gtk">GTK</a></h1>
-<h2 id="gtk-theming"><a class="header" href="#gtk-theming">Gtk-theming</a></h2>
-<p>Eww is styled in GTK CSS.
-You can use <code>Vanilla CSS</code> or <code>SCSS</code> to make theming even easier. The latter is compiled into CSS for you.
-If you don't know any way to style something check out the <a href="https://docs.gtk.org/gtk3/css-overview.html">GTK CSS Overview wiki</a>,
-the <a href="https://docs.gtk.org/gtk3/css-properties.html">GTK CSS Properties Overview wiki </a>,
-or use the <a href="#gtk-debugger">GTK-Debugger</a>.</p>
-<p>If you have <strong>NO</strong> clue about how to do CSS, check out some online guides or tutorials.</p>
-<p>SCSS is <em>very</em> close to CSS, so if you know CSS you'll have no problem learning SCSS.</p>
-<h2 id="gtk-debugger"><a class="header" href="#gtk-debugger">GTK-Debugger</a></h2>
-<p>The debugger can be used for <strong>a lot</strong> of things, especially if something doesn't work or isn't styled right.</p>
-<p>To open the GTK debugger, simply run</p>
-<pre><code class="language-bash">eww inspector
-</code></pre>
-<p>If a style or something similar doesn't work, you can click on the icon in the top left to select the thing that isn't being styled correctly.</p>
-<p>Then you can click on the drop down menu in the top right corner and select CSS Nodes. Here you will see everything about styling it, CSS Properties, and how it's structured.</p>
+                        <h1 id="gtk-theming"><a class="header" href="#gtk-theming">GTK Theming</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="expression_language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="theming_and_ui.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="magic-vars.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="styling_widgets.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -209,13 +194,13 @@ or use the <a href="#gtk-debugger">GTK-Debugger</a>.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="expression_language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="theming_and_ui.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="magic-vars.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="styling_widgets.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

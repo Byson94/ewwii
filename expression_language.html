@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="concepts.html"><strong aria-hidden="true">2.</strong> Core Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html" class="active"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="working_with_gtk.html"><strong aria-hidden="true">2.3.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.4.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">3.</strong> Widgets</a></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">4.</strong> Examples</a></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">5.</strong> Troubleshooting</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="config_and_syntax.html"><strong aria-hidden="true">2.</strong> Configuration &amp; Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="expression_language.html" class="active"><strong aria-hidden="true">2.2.</strong> Expression Language</a></li><li class="chapter-item expanded "><a href="magic-vars.html"><strong aria-hidden="true">2.3.</strong> Magic Variables</a></li></ol></li><li class="chapter-item expanded "><a href="theming_and_ui.html"><strong aria-hidden="true">3.</strong> Theming &amp; UI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="working_with_gtk.html"><strong aria-hidden="true">3.1.</strong> GTK Theming</a></li><li class="chapter-item expanded "><a href="styling_widgets.html"><strong aria-hidden="true">3.2.</strong> Styling Widgets</a></li></ol></li><li class="chapter-item expanded "><a href="widgets.html"><strong aria-hidden="true">4.</strong> Widgets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="defining_widgets.html"><strong aria-hidden="true">4.1.</strong> Defining Widgets</a></li><li class="chapter-item expanded "><a href="layouts.html"><strong aria-hidden="true">4.2.</strong> Window Layouts</a></li><li class="chapter-item expanded "><a href="props.html"><strong aria-hidden="true">4.3.</strong> Widget Properties</a></li></ol></li><li class="chapter-item expanded "><a href="examples.html"><strong aria-hidden="true">5.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/layouts.html"><strong aria-hidden="true">5.1.</strong> Common Layouts</a></li><li class="chapter-item expanded "><a href="examples/interactive.html"><strong aria-hidden="true">5.2.</strong> Interactive Widgets</a></li><li class="chapter-item expanded "><a href="examples/theming.html"><strong aria-hidden="true">5.3.</strong> Theming Tricks</a></li></ol></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">6.</strong> Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,102 +169,72 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="simple-expression-language"><a class="header" href="#simple-expression-language">Simple expression language</a></h1>
-<p>Yuck includes a small expression language that can be used to run several operations on your data.
-This can be used to show different values depending on certain conditions,
-do mathematic operations, and even access values within JSON-structures.</p>
-<p>These expressions can be placed anywhere within your configuration inside <code>{ ... }</code>,
-as well as within strings, inside string-interpolation blocks (<code>&quot;foo ${ ... } bar&quot;</code>).</p>
+                        <h1 id="the-rhai-expression-engine"><a class="header" href="#the-rhai-expression-engine">The Rhai Expression Engine</a></h1>
+<p>Ewwii uses <a href="https://rhai.rs/">Rhai</a> as its core expression and scripting engine. This means your configuration is more than just static values or simple substitutions—it’s <strong>real code</strong>, and you can use it anywhere dynamic behavior is needed.</p>
+<p>Rhai expressions can:</p>
+<ul>
+<li>Perform logic and branching (<code>if</code>, <code>match</code>, <code>? :</code>)</li>
+<li>Handle mathematical calculations and string operations</li>
+<li>Access nested data from arrays, maps, or JSON</li>
+<li>Run custom functions</li>
+<li>Be used directly in layout definitions, widget attributes, and style rules</li>
+</ul>
+<p>Unlike Yuck, where expressions were embedded in <code>{ ... }</code> or <code>${ ... }</code>, Rhai treats expressions as <strong>native</strong>. They don’t need to be wrapped in special delimiters. If you can write it in Rhai, it just works.</p>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
-<pre><code class="language-lisp">(box
-  &quot;Some math: ${12 + foo * 10}&quot;
-  (button :class {button_active ? &quot;active&quot; : &quot;inactive&quot;}
-          :onclick &quot;toggle_thing&quot;
-    {button_active ? &quot;disable&quot; : &quot;enable&quot;}))
+<pre><code class="language-rust ignore">let value = 12 + foo * 10;
+
+box(#{
+  class: &quot;baz&quot;
+  orientation: &quot;h&quot;,
+}, [
+  button(#{
+    class: button_active ? &quot;active&quot; : &quot;inactive&quot;,
+    on_click: &quot;toggle_thing&quot;,
+    label: &quot;Some math: ${value}&quot;,
+  }),
+]);
 </code></pre>
-<h2 id="features"><a class="header" href="#features">Features</a></h2>
-<p>Supported currently are the following features:</p>
+<h2 id="core-features"><a class="header" href="#core-features">Core Features</a></h2>
+<p>Rhai supports a wide range of expression capabilities:</p>
 <ul>
-<li>simple mathematical operations (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>)</li>
-<li>comparisons (<code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>)</li>
-<li>boolean operations (<code>||</code>, <code>&amp;&amp;</code>, <code>!</code>)</li>
-<li>regex match operator (<code>=~</code>)
+<li><strong>Mathematics</strong>: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code></li>
+<li><strong>Comparisons</strong>: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></li>
+<li><strong>Boolean logic</strong>: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code></li>
+<li><strong>Conditionals</strong>: <code>if/else</code>, ternary (<code>cond ? a : b</code>)</li>
+<li><strong>Regex matching</strong>: <code>=~</code> operator (Rust-style regex)</li>
+<li><strong>Optional access</strong>: <code>?.</code> and <code>?.[index]</code></li>
+<li><strong>Data structures</strong>: maps/arrays (<code>obj.field</code>, <code>arr[3]</code>, <code>map[&quot;key&quot;]</code>)</li>
+<li><strong>Function calls</strong>: standard and Ewwii-specific built-ins (see below)</li>
+<li><strong>String interpolation</strong>: <code>&quot;Value is ${value}&quot;</code> (standard Rhai feature)</li>
+</ul>
+<h2 id="common-built-in-functions"><a class="header" href="#common-built-in-functions">Common Built-in Functions</a></h2>
+<p>💡 <em>You may recognize some of these from the old expression system—but now they're just Rhai functions.</em></p>
+<p>Examples include:</p>
 <ul>
-<li>Rust regex style, left hand is regex, right hand is string</li>
-<li>ex: workspace.name =~ '^special:.+$'</li>
+<li><code>round()</code>, <code>floor()</code>, <code>ceil()</code>, <code>powi()</code>, <code>powf()</code></li>
+<li><code>min()</code>, <code>max()</code>, <code>sin()</code>, <code>cos()</code>, etc.</li>
+<li><code>replace()</code>, <code>matches()</code>, <code>captures()</code></li>
+<li><code>strlength()</code>, <code>arraylength()</code>, <code>objectlength()</code></li>
+<li><code>jq()</code> – run jaq-compatible filters on JSON data</li>
+<li><code>get_env()</code> – read environment variables</li>
+<li><code>formattime()</code> – format UNIX timestamps</li>
+<li><code>formatbytes()</code> – format file sizes (IEC or SI)</li>
 </ul>
-</li>
-<li>elvis operator (<code>?:</code>)
-<ul>
-<li>if the left side is <code>&quot;&quot;</code> or a JSON <code>null</code>, then returns the right side,
-otherwise evaluates to the left side.</li>
-</ul>
-</li>
-<li>Safe Access operator (<code>?.</code>) or (<code>?.[index]</code>)
-<ul>
-<li>if the left side is an empty string or a JSON <code>null</code>, then return <code>null</code>. Otherwise,
-attempt to index. Note that indexing an empty JSON string (<code>'&quot;&quot;'</code>) is an error.</li>
-<li>This can still cause an error to occur if the left hand side exists but is
-not an object or an array.
-(<code>Number</code> or <code>String</code>).</li>
-</ul>
-</li>
-<li>conditionals (<code>condition ? 'value' : 'other value'</code>)</li>
-<li>numbers, strings, booleans and variable references (<code>12</code>, <code>'hi'</code>, <code>true</code>, <code>some_variable</code>)</li>
-<li>json access (<code>object.field</code>, <code>array[12]</code>, <code>object[&quot;field&quot;]</code>)
-<ul>
-<li>for this, the object/array value needs to refer to a variable that contains a valid json string.</li>
-</ul>
-</li>
-<li>some function calls:
-<ul>
-<li><code>round(number, decimal_digits)</code>: Round a number to the given amount of decimals</li>
-<li><code>floor(number)</code>: Round a number down to the nearest integer</li>
-<li><code>ceil(number)</code>: Round a number up to the nearest integer</li>
-<li><code>sin(number)</code>, <code>cos(number)</code>, <code>tan(number)</code>, <code>cot(number)</code>: Calculate the trigonometric value of a given number in <strong>radians</strong></li>
-<li><code>min(a, b)</code>, <code>max(a, b)</code>: Get the smaller or bigger number out of two given numbers</li>
-<li><code>powi(num, n)</code>, <code>powf(num, n)</code>: Raise number <code>num</code> to power <code>n</code>. <code>powi</code> expects <code>n</code> to be of type <code>i32</code></li>
-<li><code>log(num, n)</code>: Calculate the base <code>n</code> logarithm of <code>num</code>. <code>num</code>, <code>n</code> and return type are <code>f64</code></li>
-<li><code>degtorad(number)</code>: Converts a number from degrees to radians</li>
-<li><code>radtodeg(number)</code>: Converts a number from radians to degrees</li>
-<li><code>replace(string, regex, replacement)</code>: Replace matches of a given regex in a string</li>
-<li><code>search(string, regex)</code>: Search for a given regex in a string (returns array)</li>
-<li><code>matches(string, regex)</code>: check if a given string matches a given regex (returns bool)</li>
-<li><code>captures(string, regex)</code>: Get the captures of a given regex in a string (returns array)</li>
-<li><code>strlength(value)</code>: Gets the length of the string
-<ul>
-<li><code>substring(string, start, length)</code>: Return a substring of given length starting at the given index</li>
-</ul>
-</li>
-<li><code>arraylength(value)</code>: Gets the length of the array</li>
-<li><code>objectlength(value)</code>: Gets the amount of entries in the object</li>
-<li><code>jq(value, jq_filter_string)</code>: run a <a href="https://jqlang.github.io/jq/manual/">jq</a> style command on a json value. (Uses <a href="https://crates.io/crates/jaq">jaq</a> internally).</li>
-<li><code>jq(value, jq_filter_string, args)</code>: Emulate command line flags for jq, see <a href="https://jqlang.github.io/jq/manual/#invoking-jq">the docs</a> on invoking jq for details. Invalid flags are silently ignored.
-Currently supported flags:
-<ul>
-<li><code>&quot;r&quot;</code>: If the result is a string, it won't be formatted as a JSON string. The equivalent jq flag is <code>--raw-output</code>.</li>
-</ul>
-</li>
-<li><code>get_env(string)</code>: Gets the specified enviroment variable</li>
-<li><code>formattime(unix_timestamp, format_str, timezone)</code>: Gets the time in a given format from UNIX timestamp.
-Check <a href="https://docs.rs/chrono/latest/chrono/format/strftime/index.html">chrono's documentation</a> for more
-information about format string and <a href="https://docs.rs/chrono-tz/latest/chrono_tz/enum.Tz.html">chrono-tz's documentation</a>
-for available time zones.</li>
-<li><code>formattime(unix_timestamp, format_str)</code>: Gets the time in a given format from UNIX timestamp.
-Same as other <code>formattime</code>, but does not accept timezone. Instead, it uses system's local timezone.
-Check <a href="https://docs.rs/chrono/latest/chrono/format/strftime/index.html">chrono's documentation</a> for more
-information about format string.</li>
-<li><code>formatbytes(bytes, short, format_mode)</code>: Display bytes in a human-readable format.
-Arguments:
-<ul>
-<li><code>bytes</code>: <code>i64</code> of bytes, supports negative sizes.</li>
-<li><code>short</code>: set true for a compact version (default: false)</li>
-<li><code>format_mode</code>: set to either to &quot;iec&quot; (eg. <code>1.0 GiB</code>) or &quot;si&quot; (eg. <code>1.2 GB</code>) (default: &quot;iec&quot;)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<h2 id="dynamic-usage"><a class="header" href="#dynamic-usage">Dynamic Usage</a></h2>
+<p>Because expressions are just Rhai, you can now write real logic inline or break it into reusable functions:</p>
+<pre><code class="language-rhai">fn status_text(active) {
+  return active ? &quot;enabled&quot; : &quot;disabled&quot;;
+}
+
+label({
+  text: &quot;Status: ${status_text(system_active)}&quot;
+});
+</code></pre>
+<hr />
+<h3 id="tldr"><a class="header" href="#tldr">TL;DR</a></h3>
+<blockquote>
+<p>If you’ve used scripting languages like JavaScript or Lua, you’ll feel at home. Rhai gives you real control—not just interpolation tricks.</p>
+</blockquote>
 
                     </main>
 
@@ -277,7 +247,7 @@ Arguments:
                         
 
                         
-                            <a rel="next" href="working_with_gtk.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="magic-vars.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -295,7 +265,7 @@ Arguments:
                 
 
                 
-                    <a rel="next" href="working_with_gtk.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="magic-vars.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
