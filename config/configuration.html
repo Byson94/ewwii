@@ -188,10 +188,7 @@ These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is mo
 <h2 id="creating-your-first-window"><a class="header" href="#creating-your-first-window">Creating your first window</a></h2>
 <p>Firstly, you will need to create a top-level window. Here, you configure things such as the name, position, geometry, and content of your window.</p>
 <p>Let's look at an example window definition:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([ // Add all defwindow inside enter. Enter is the root of the config.
+<pre><code class="language-rust ignore">enter([ // Add all defwindow inside enter. Enter is the root of the config.
   defwindow(&quot;example&quot;, #{
       monitor: 0,
       windowtype: &quot;dock&quot;,
@@ -207,8 +204,7 @@ These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is mo
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Here, we are defining a window named <code>example</code>, which we then define a set of properties for. Additionally, we set the content of the window to be the text <code>&quot;example content&quot;</code>.</p>
 <p>You can now open your first window by running <code>eww open example</code>! Glorious!</p>
 <h3 id="defwindow-properties"><a class="header" href="#defwindow-properties"><code>defwindow</code>-properties</a></h3>
@@ -248,10 +244,7 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
 </tbody></table>
 <h2 id="your-first-widget"><a class="header" href="#your-first-widget">Your first widget</a></h2>
 <p>While our bar is already looking great, it's a bit boring. Thus, let's add some actual content!</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(name) {
+<pre><code class="language-rust ignore">fn greeter(name) {
   return box(#{
     orientation: &quot;horizontal&quot;,
     halign: &quot;center&quot;
@@ -259,19 +252,14 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
     button(#{ onclick: &quot;notify-send 'Hello' 'Hello, ${name}'&quot;, text: &quot;Greet&quot; })
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>To show this, let's replace the text in our window definition with a call to this new widget:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   defwindow(&quot;example&quot;, #{
     // ... properties omitted
   }, greeter(&quot;Bob&quot;))
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>There is a lot going on here, so let's step through this.</p>
 <p>We are creating a function named <code>greeter</code> and a function is equal to a component that returns a child (widget). So function has two uses: one to return a component, and the other to do a set of functions.
 And this function takes one parameters, called <code>name</code>. The <code>name</code> parameter <em>must</em> be provided or else, you should emit it. Rhai does allow adding optional parameters, but we will talk about it later for the sake of beginners who are in-experienced with imprative programming languages.</p>
@@ -290,45 +278,29 @@ This allows us to easily refer to any variables within strings.</p>
 <p>As your configuration grows, you might want to improve its structure by factoring out pieces into reusable functions.</p>
 <p>In Ewwii’s Rhai-based configuration system, you can define wrapper functions that return widgets and accept a <code>children</code> parameter, just like built-in widgets such as <code>box()</code> or <code>button()</code>.</p>
 <p>Here's an example of a custom container that adds a label before its children:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn labeled_container(name, children = []) {
+<pre><code class="language-rust ignore">fn labeled_container(name, children = []) {
   return box(#{ class: &quot;container&quot; }, [label(#{text: name})] + children)
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>You can call it like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>labeled_container(&quot;foo&quot;, [
+<pre><code class="language-rust ignore">labeled_container(&quot;foo&quot;, [
   button(#{ onclick: &quot;notify-send hey ho&quot;, text: &quot;Click me&quot; })
 ]);
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Because children are just a list of widgets, you can also write functions that structure them however you'd like. For example, here's a layout that places the first two children side by side:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn two_boxes(children = []) {
+<pre><code class="language-rust ignore">fn two_boxes(children = []) {
   return box(#{}, [
     box(#{ class: &quot;first&quot; }, [children[0]]),
     box(#{ class: &quot;second&quot; }, [children[1]])
   ]);
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>And call it like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>two_boxes([
+<pre><code class="language-rust ignore">two_boxes([
   label(#{ text: &quot;First&quot; }),
   label(#{ text: &quot;Second&quot; })
 ]);
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>If a child is missing (e.g., children[1] doesn't exist), make sure to handle that gracefully or document the expected number of children.</p>
 <!-- TODO: add it once literal is implemented -->
 <!-- ## Dynamically generated widgets with `literal`
@@ -341,7 +313,7 @@ or if you want to change the widget structure in some other, more complex way.
 
 For this, you can make use of one of ewwii's most powerful features: the `literal` widget.
 
-```rust
+```rust,ignore
 let variable_containing_rhai = "(box (button 'foo') (button 'bar'))";
 
 // Then, inside your widget, use:
@@ -363,10 +335,7 @@ ewwii open my_bar --screen 1 --id secondary
 </code></pre>
 <h2 id="generating-a-list-of-widgets-from-array-using-for"><a class="header" href="#generating-a-list-of-widgets-from-array-using-for">Generating a list of widgets from array using <code>for</code></a></h2>
 <p>If you want to display a list of values, you can use the <code>for</code>-Element to fill a container with a list of elements generated from a JSON-array.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let my_array = [1, 2, 3];
+<pre><code class="language-rust ignore">let my_array = [1, 2, 3];
 
 // Then, inside your widget, you can use
 box(#{}, [
@@ -374,8 +343,7 @@ box(#{}, [
     button(#{ onclick: &quot;notify-send 'click' 'button ${entry}'&quot;, text: entry.to_string() })
   }
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>This can be useful in many situations, for example when generating a workspace list from an array representation of your workspaces.
 In many cases, this can be used instead of <code>literal</code>, and should most likely be preferred in those cases.</p>
 <!-- To see how to declare and use more advanced data structures, check out the [data structures example](/examples/data-structures/ewwii.rhai). -->
@@ -383,12 +351,8 @@ In many cases, this can be used instead of <code>literal</code>, and should most
 <p>As time passes, your configuration might grow larger and larger. Luckily, you can easily split up your configuration into multiple files!</p>
 <p>There are two options to achieve this:</p>
 <h3 id="using-include"><a class="header" href="#using-include">Using <code>include</code></a></h3>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>include(&quot;./path/to/your/file.rhai&quot;);
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">include(&quot;./path/to/your/file.rhai&quot;);
+</code></pre>
 <p>A single rhai file may import the contents of any other rhai file. For this, make use of the <code>include</code> directive.</p>
 <h3 id="using-a-separate-ewwii-configuration-directory"><a class="header" href="#using-a-separate-ewwii-configuration-directory">Using a separate ewwii configuration directory</a></h3>
 <p>If you want to separate different widgets even further, you can create a new ewwii config folder anywhere else.

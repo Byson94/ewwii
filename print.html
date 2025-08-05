@@ -255,6 +255,18 @@ When you're on Wayland, build with:</p>
 <pre><code class="language-bash">cargo install --git https://github.com/byson94/ewwii
 </code></pre>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="configuration--syntax"><a class="header" href="#configuration--syntax">Configuration &amp; Syntax</a></h1>
+<p>This section introduces the foundational systems that define how you configure your UI, express logic, and work with dynamic data in Rahi (Ewwii's configuration language).</p>
+<p>The configuration model is imparative by nature but will be used in a declarative format that is made to make configuring ewwii easy as well as to provide a logical way of configuring. You'll also work with special built in functions and modules that expose live system state and other information.</p>
+<p>We'll cover:</p>
+<ul>
+<li>The structure of configuration files</li>
+<li>Embedding expressions within properties and attributes</li>
+<li>Accessing and using built-in variables</li>
+<li>Interpolation, scoping, and reactivity rules</li>
+</ul>
+<blockquote>
+<p>If you're coming from EWW's Yuck, expect similarities in structure but with much more flexibility and logical programming.</p>
+</blockquote>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="writing-your-ewwii-configuration"><a class="header" href="#writing-your-ewwii-configuration">Writing your ewwii configuration</a></h1>
 <p>(For a list of all built-in widgets (i.e. <code>box</code>, <code>label</code>, <code>button</code>), see <a href="config/widgets.html">Widget Documentation</a>.)<br />
 Ewwii is configured using its own language called <code>rhai</code>.
@@ -274,10 +286,7 @@ These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is mo
 <h2 id="creating-your-first-window"><a class="header" href="#creating-your-first-window">Creating your first window</a></h2>
 <p>Firstly, you will need to create a top-level window. Here, you configure things such as the name, position, geometry, and content of your window.</p>
 <p>Let's look at an example window definition:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([ // Add all defwindow inside enter. Enter is the root of the config.
+<pre><code class="language-rust ignore">enter([ // Add all defwindow inside enter. Enter is the root of the config.
   defwindow(&quot;example&quot;, #{
       monitor: 0,
       windowtype: &quot;dock&quot;,
@@ -293,8 +302,7 @@ These files must be placed under <code>$XDG_CONFIG_HOME/ewwii</code> (this is mo
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Here, we are defining a window named <code>example</code>, which we then define a set of properties for. Additionally, we set the content of the window to be the text <code>&quot;example content&quot;</code>.</p>
 <p>You can now open your first window by running <code>eww open example</code>! Glorious!</p>
 <h3 id="defwindow-properties"><a class="header" href="#defwindow-properties"><code>defwindow</code>-properties</a></h3>
@@ -334,10 +342,7 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
 </tbody></table>
 <h2 id="your-first-widget"><a class="header" href="#your-first-widget">Your first widget</a></h2>
 <p>While our bar is already looking great, it's a bit boring. Thus, let's add some actual content!</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(name) {
+<pre><code class="language-rust ignore">fn greeter(name) {
   return box(#{
     orientation: &quot;horizontal&quot;,
     halign: &quot;center&quot;
@@ -345,19 +350,14 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
     button(#{ onclick: &quot;notify-send 'Hello' 'Hello, ${name}'&quot;, text: &quot;Greet&quot; })
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>To show this, let's replace the text in our window definition with a call to this new widget:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   defwindow(&quot;example&quot;, #{
     // ... properties omitted
   }, greeter(&quot;Bob&quot;))
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>There is a lot going on here, so let's step through this.</p>
 <p>We are creating a function named <code>greeter</code> and a function is equal to a component that returns a child (widget). So function has two uses: one to return a component, and the other to do a set of functions.
 And this function takes one parameters, called <code>name</code>. The <code>name</code> parameter <em>must</em> be provided or else, you should emit it. Rhai does allow adding optional parameters, but we will talk about it later for the sake of beginners who are in-experienced with imprative programming languages.</p>
@@ -376,45 +376,29 @@ This allows us to easily refer to any variables within strings.</p>
 <p>As your configuration grows, you might want to improve its structure by factoring out pieces into reusable functions.</p>
 <p>In Ewwii’s Rhai-based configuration system, you can define wrapper functions that return widgets and accept a <code>children</code> parameter, just like built-in widgets such as <code>box()</code> or <code>button()</code>.</p>
 <p>Here's an example of a custom container that adds a label before its children:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn labeled_container(name, children = []) {
+<pre><code class="language-rust ignore">fn labeled_container(name, children = []) {
   return box(#{ class: &quot;container&quot; }, [label(#{text: name})] + children)
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>You can call it like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>labeled_container(&quot;foo&quot;, [
+<pre><code class="language-rust ignore">labeled_container(&quot;foo&quot;, [
   button(#{ onclick: &quot;notify-send hey ho&quot;, text: &quot;Click me&quot; })
 ]);
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Because children are just a list of widgets, you can also write functions that structure them however you'd like. For example, here's a layout that places the first two children side by side:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn two_boxes(children = []) {
+<pre><code class="language-rust ignore">fn two_boxes(children = []) {
   return box(#{}, [
     box(#{ class: &quot;first&quot; }, [children[0]]),
     box(#{ class: &quot;second&quot; }, [children[1]])
   ]);
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>And call it like this:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>two_boxes([
+<pre><code class="language-rust ignore">two_boxes([
   label(#{ text: &quot;First&quot; }),
   label(#{ text: &quot;Second&quot; })
 ]);
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>If a child is missing (e.g., children[1] doesn't exist), make sure to handle that gracefully or document the expected number of children.</p>
 <!-- TODO: add it once literal is implemented -->
 <!-- ## Dynamically generated widgets with `literal`
@@ -427,7 +411,7 @@ or if you want to change the widget structure in some other, more complex way.
 
 For this, you can make use of one of ewwii's most powerful features: the `literal` widget.
 
-```rust
+```rust,ignore
 let variable_containing_rhai = "(box (button 'foo') (button 'bar'))";
 
 // Then, inside your widget, use:
@@ -449,10 +433,7 @@ ewwii open my_bar --screen 1 --id secondary
 </code></pre>
 <h2 id="generating-a-list-of-widgets-from-array-using-for"><a class="header" href="#generating-a-list-of-widgets-from-array-using-for">Generating a list of widgets from array using <code>for</code></a></h2>
 <p>If you want to display a list of values, you can use the <code>for</code>-Element to fill a container with a list of elements generated from a JSON-array.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let my_array = [1, 2, 3];
+<pre><code class="language-rust ignore">let my_array = [1, 2, 3];
 
 // Then, inside your widget, you can use
 box(#{}, [
@@ -460,8 +441,7 @@ box(#{}, [
     button(#{ onclick: &quot;notify-send 'click' 'button ${entry}'&quot;, text: entry.to_string() })
   }
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>This can be useful in many situations, for example when generating a workspace list from an array representation of your workspaces.
 In many cases, this can be used instead of <code>literal</code>, and should most likely be preferred in those cases.</p>
 <!-- To see how to declare and use more advanced data structures, check out the [data structures example](/examples/data-structures/ewwii.rhai). -->
@@ -469,12 +449,8 @@ In many cases, this can be used instead of <code>literal</code>, and should most
 <p>As time passes, your configuration might grow larger and larger. Luckily, you can easily split up your configuration into multiple files!</p>
 <p>There are two options to achieve this:</p>
 <h3 id="using-include"><a class="header" href="#using-include">Using <code>include</code></a></h3>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>include(&quot;./path/to/your/file.rhai&quot;);
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">include(&quot;./path/to/your/file.rhai&quot;);
+</code></pre>
 <p>A single rhai file may import the contents of any other rhai file. For this, make use of the <code>include</code> directive.</p>
 <h3 id="using-a-separate-ewwii-configuration-directory"><a class="header" href="#using-a-separate-ewwii-configuration-directory">Using a separate ewwii configuration directory</a></h3>
 <p>If you want to separate different widgets even further, you can create a new ewwii config folder anywhere else.
@@ -491,10 +467,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
 <p>Each widget in ewwii is a function (e.g: <code>button(#{...})</code> is a function call to create a button). So each one requires its own parameters.</p>
 <p>For example, <code>defwindow</code> expects a <strong>String</strong>, <strong>Properties</strong>, and a function call that <strong>returns a widget.</strong></p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   // the string here (the text in &quot;&quot;) is the name of the window
   // the content in #{} is the properties
   // and the 3rd `root_widget()` call is the function that returns a child.
@@ -515,17 +488,13 @@ This launches a separate instance of the ewwii daemon that has separate logs and
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>This is not that complex once you know the parameters of defwindow as most of the other widgets only take in properties or optinally children. <strong>Poll/Listen</strong> are the only things that is similar to <code>defwindow</code> and you will learn about it later in the <a href="config/./variables.html">variables chapter</a>.</p>
 <h2 id="the-root"><a class="header" href="#the-root">The root</a></h2>
 <p>It is an important concept that users must know to go forward with this documentaiton. Ewwii's Rhai layout is made to be <strong>logical and powerful</strong>, so the user is given access the root of the entire widget system.</p>
 <p>The root is defined as <code>enter()</code> and it is where you should write <code>defwindow</code>.</p>
 <p>Here is an example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   defwindow(&quot;example&quot;, #{
       monitor: 0,
       windowtype: &quot;dock&quot;,
@@ -541,8 +510,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Now that you saw this example, you may be wondering why we are doing <code>enter([])</code> instead of <code>enter()</code>. That is due to another fundamental concept in ewwii which is very important. You will learn about it in the <a href="config/config_fundamentals.html#properties-and-child-definition">properties and child definition section</a>.</p>
 <h2 id="semi-colons"><a class="header" href="#semi-colons">Semi-colons</a></h2>
 <p>Semi-colon is an important character in Rhai. Just like programming languages like JavaScript, Java, Rust etc.</p>
@@ -552,10 +520,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
 <p>The part where most people get confused is the use of <code>[]</code> and <code>#{}</code>. Let's get into what those are and how you can use them.</p>
 <p>The <code>[]</code> is used for adding <strong>children</strong> to a widget.</p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(foo) {
+<pre><code class="language-rust ignore">fn greeter(foo) {
   return box(#{
     orientation: &quot;horizontal&quot;,
     halign: &quot;center&quot;
@@ -566,14 +531,10 @@ This launches a separate instance of the ewwii daemon that has separate logs and
     label(#{ text: &quot;example&quot; }),
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The <code>#{}</code> works similar to the <code>[]</code> but, it is used to add properties into the widget.</p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(foo) {
+<pre><code class="language-rust ignore">fn greeter(foo) {
   // the `#{}` holds the properties of the box widget
   // each element in a `#{}` should end in a comma (,) instead of a semi-colon (;).
   return box(#{
@@ -585,8 +546,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
     label(#{ text: &quot;example&quot; }),
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
 <p>Now that you feel sufficiently greeted by your bar, you may realize that showing data like the time and date might be even more useful than having a button that greets you.</p>
 <p>To implement dynamic content in your widgets, you make use of <em>variables</em>.</p>
@@ -594,21 +554,14 @@ This launches a separate instance of the ewwii daemon that has separate logs and
 <h2 id="static-variables"><a class="header" href="#static-variables">Static variables</a></h2>
 <p>In Rhai, all variables are dynamically typed bindings to values. You can define variables using let, pass them as function parameters.</p>
 <p><strong>Basic variables (<code>let</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let foo = &quot;value&quot;;
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">let foo = &quot;value&quot;;
+</code></pre>
 <p>This is the simplest type of variable.
 Basic variables don't ever change automatically, if you need a dynamic variable, you can use built in functions like <code>poll()</code> and <code>listen()</code> to register dynamic values which we will talk about in the following section.</p>
 <h2 id="dynamic-variables"><a class="header" href="#dynamic-variables">Dynamic variables</a></h2>
 <p>Just having static variables that wont update is pretty limiting. So, ewwii has two built in functions to register dynamic variables that can change according to the command.</p>
 <p><strong>Polling variables (<code>poll</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>poll(&quot;var_name&quot;, #{
+<pre><code class="language-rust ignore">poll(&quot;var_name&quot;, #{
   // It is recommended to have initial property passed.
   // If not provided, it will default to no value which may cause problems when used.
   // You can pass something like &quot;&quot; if you want no initial value.
@@ -616,8 +569,7 @@ Basic variables don't ever change automatically, if you need a dynamic variable,
   interval: &quot;2s&quot;,
   cmd: &quot;date +%H:%M:%S&quot;, // command to execute
 })
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>A polling variable is a variable which runs a provided shell-script repeatedly, in a given interval.</p>
 <p>This may be the most commonly used type of variable.
 They are useful to access any quickly retrieved value repeatedly,
@@ -627,15 +579,11 @@ But it is important to note that these variables are locally available only in e
 making the startup time faster. -->
 <p>To externally update a polling variable, <code>ewwii update</code> can be used like with basic variables to assign a value.</p>
 <p><strong>Listening variables (<code>listen</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>listen(&quot;foo&quot;, #{
+<pre><code class="language-rust ignore">listen(&quot;foo&quot;, #{
   initial: &quot;whatever&quot;,
   cmd: &quot;tail -F /tmp/some_file&quot;,
 })
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Listening variables might be the most confusing of the bunch.
 A listening variable runs a script once, and reads its output continously.
 Whenever the script outputs a new line, the value will be updated to that new line.
@@ -656,10 +604,7 @@ All available magic variables are listed [here](magic-vars.md). -->
 <h2 id="passing-variables"><a class="header" href="#passing-variables">Passing variables</a></h2>
 <p>As we discussed earlier, all variables are only available locally. So, you would need to pass it around from the current scope.</p>
 <p>Here is an example of how it is done:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let foo = &quot;example&quot;;
+<pre><code class="language-rust ignore">let foo = &quot;example&quot;;
 
 poll(&quot;time&quot;, #{
   initial: &quot;inital value&quot;,
@@ -673,8 +618,7 @@ poll(&quot;time&quot;, #{
 fn wont_work() {
   return box(#{}, [ label(#{ text: time }), label(#{ text: foo }) ]);
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <blockquote>
 <p>[!NOTE]
 test</p>

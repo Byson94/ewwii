@@ -177,10 +177,7 @@
 <p>Each widget in ewwii is a function (e.g: <code>button(#{...})</code> is a function call to create a button). So each one requires its own parameters.</p>
 <p>For example, <code>defwindow</code> expects a <strong>String</strong>, <strong>Properties</strong>, and a function call that <strong>returns a widget.</strong></p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   // the string here (the text in &quot;&quot;) is the name of the window
   // the content in #{} is the properties
   // and the 3rd `root_widget()` call is the function that returns a child.
@@ -201,17 +198,13 @@
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>This is not that complex once you know the parameters of defwindow as most of the other widgets only take in properties or optinally children. <strong>Poll/Listen</strong> are the only things that is similar to <code>defwindow</code> and you will learn about it later in the <a href="./variables.html">variables chapter</a>.</p>
 <h2 id="the-root"><a class="header" href="#the-root">The root</a></h2>
 <p>It is an important concept that users must know to go forward with this documentaiton. Ewwii's Rhai layout is made to be <strong>logical and powerful</strong>, so the user is given access the root of the entire widget system.</p>
 <p>The root is defined as <code>enter()</code> and it is where you should write <code>defwindow</code>.</p>
 <p>Here is an example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enter([
+<pre><code class="language-rust ignore">enter([
   defwindow(&quot;example&quot;, #{
       monitor: 0,
       windowtype: &quot;dock&quot;,
@@ -227,8 +220,7 @@
       reserve: #{ distance: &quot;40px&quot; side: &quot;top&quot; }
   }, root_widget())
 ])
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Now that you saw this example, you may be wondering why we are doing <code>enter([])</code> instead of <code>enter()</code>. That is due to another fundamental concept in ewwii which is very important. You will learn about it in the <a href="#properties-and-child-definition">properties and child definition section</a>.</p>
 <h2 id="semi-colons"><a class="header" href="#semi-colons">Semi-colons</a></h2>
 <p>Semi-colon is an important character in Rhai. Just like programming languages like JavaScript, Java, Rust etc.</p>
@@ -238,10 +230,7 @@
 <p>The part where most people get confused is the use of <code>[]</code> and <code>#{}</code>. Let's get into what those are and how you can use them.</p>
 <p>The <code>[]</code> is used for adding <strong>children</strong> to a widget.</p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(foo) {
+<pre><code class="language-rust ignore">fn greeter(foo) {
   return box(#{
     orientation: &quot;horizontal&quot;,
     halign: &quot;center&quot;
@@ -252,14 +241,10 @@
     label(#{ text: &quot;example&quot; }),
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The <code>#{}</code> works similar to the <code>[]</code> but, it is used to add properties into the widget.</p>
 <p><strong>Example:</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn greeter(foo) {
+<pre><code class="language-rust ignore">fn greeter(foo) {
   // the `#{}` holds the properties of the box widget
   // each element in a `#{}` should end in a comma (,) instead of a semi-colon (;).
   return box(#{
@@ -271,8 +256,7 @@
     label(#{ text: &quot;example&quot; }),
   ]);
 };
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 
                     </main>
 

@@ -176,21 +176,14 @@
 <h2 id="static-variables"><a class="header" href="#static-variables">Static variables</a></h2>
 <p>In Rhai, all variables are dynamically typed bindings to values. You can define variables using let, pass them as function parameters.</p>
 <p><strong>Basic variables (<code>let</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let foo = &quot;value&quot;;
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">let foo = &quot;value&quot;;
+</code></pre>
 <p>This is the simplest type of variable.
 Basic variables don't ever change automatically, if you need a dynamic variable, you can use built in functions like <code>poll()</code> and <code>listen()</code> to register dynamic values which we will talk about in the following section.</p>
 <h2 id="dynamic-variables"><a class="header" href="#dynamic-variables">Dynamic variables</a></h2>
 <p>Just having static variables that wont update is pretty limiting. So, ewwii has two built in functions to register dynamic variables that can change according to the command.</p>
 <p><strong>Polling variables (<code>poll</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>poll(&quot;var_name&quot;, #{
+<pre><code class="language-rust ignore">poll(&quot;var_name&quot;, #{
   // It is recommended to have initial property passed.
   // If not provided, it will default to no value which may cause problems when used.
   // You can pass something like &quot;&quot; if you want no initial value.
@@ -198,8 +191,7 @@ Basic variables don't ever change automatically, if you need a dynamic variable,
   interval: &quot;2s&quot;,
   cmd: &quot;date +%H:%M:%S&quot;, // command to execute
 })
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>A polling variable is a variable which runs a provided shell-script repeatedly, in a given interval.</p>
 <p>This may be the most commonly used type of variable.
 They are useful to access any quickly retrieved value repeatedly,
@@ -209,15 +201,11 @@ But it is important to note that these variables are locally available only in e
 making the startup time faster. -->
 <p>To externally update a polling variable, <code>ewwii update</code> can be used like with basic variables to assign a value.</p>
 <p><strong>Listening variables (<code>listen</code>)</strong></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>listen(&quot;foo&quot;, #{
+<pre><code class="language-rust ignore">listen(&quot;foo&quot;, #{
   initial: &quot;whatever&quot;,
   cmd: &quot;tail -F /tmp/some_file&quot;,
 })
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>Listening variables might be the most confusing of the bunch.
 A listening variable runs a script once, and reads its output continously.
 Whenever the script outputs a new line, the value will be updated to that new line.
@@ -238,10 +226,7 @@ All available magic variables are listed [here](magic-vars.md). -->
 <h2 id="passing-variables"><a class="header" href="#passing-variables">Passing variables</a></h2>
 <p>As we discussed earlier, all variables are only available locally. So, you would need to pass it around from the current scope.</p>
 <p>Here is an example of how it is done:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let foo = &quot;example&quot;;
+<pre><code class="language-rust ignore">let foo = &quot;example&quot;;
 
 poll(&quot;time&quot;, #{
   initial: &quot;inital value&quot;,
@@ -255,8 +240,7 @@ poll(&quot;time&quot;, #{
 fn wont_work() {
   return box(#{}, [ label(#{ text: time }), label(#{ text: foo }) ]);
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <blockquote>
 <p>[!NOTE]
 test</p>
