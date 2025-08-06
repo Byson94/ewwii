@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="config/config_and_syntax.html"><strong aria-hidden="true">2.</strong> Configuration &amp; Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="config/configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="config/config_fundamentals.html"><strong aria-hidden="true">2.2.</strong> Fundamentals</a></li><li class="chapter-item expanded "><a href="config/variables.html"><strong aria-hidden="true">2.3.</strong> Variables</a></li></ol></li><li class="chapter-item expanded "><a href="theming/theming_and_ui.html"><strong aria-hidden="true">3.</strong> Theming &amp; UI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="theming/working_with_gtk.html"><strong aria-hidden="true">3.1.</strong> Working With GTK</a></li><li class="chapter-item expanded "><a href="theming/styling_widgets.html"><strong aria-hidden="true">3.2.</strong> Styling Widgets</a></li></ol></li><li class="chapter-item expanded "><a href="modules/modules.html"><strong aria-hidden="true">4.</strong> Modules</a></li><li class="chapter-item expanded "><a href="widgets/widgets.html"><strong aria-hidden="true">5.</strong> Widgets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="widgets/widgets_and_params.html"><strong aria-hidden="true">5.1.</strong> Widgets &amp; Parameters</a></li><li class="chapter-item expanded "><a href="widgets/props.html"><strong aria-hidden="true">5.2.</strong> Widget Properties</a></li></ol></li><li class="chapter-item expanded "><a href="examples/examples.html"><strong aria-hidden="true">6.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/common_layouts.html"><strong aria-hidden="true">6.1.</strong> Common Layouts</a></li><li class="chapter-item expanded "><a href="examples/interactive.html"><strong aria-hidden="true">6.2.</strong> Interactive Widgets</a></li><li class="chapter-item expanded "><a href="examples/theming.html"><strong aria-hidden="true">6.3.</strong> Theming Tricks</a></li></ol></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">7.</strong> Troubleshooting</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="getting_started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li></ol></li><li class="chapter-item expanded "><a href="config/config_and_syntax.html"><strong aria-hidden="true">2.</strong> Configuration &amp; Syntax</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="config/configuration.html"><strong aria-hidden="true">2.1.</strong> Configuration</a></li><li class="chapter-item expanded "><a href="config/config_fundamentals.html"><strong aria-hidden="true">2.2.</strong> Fundamentals</a></li><li class="chapter-item expanded "><a href="config/variables.html"><strong aria-hidden="true">2.3.</strong> Variables</a></li><li class="chapter-item expanded "><a href="expression_language.html"><strong aria-hidden="true">2.4.</strong> Expression Language</a></li></ol></li><li class="chapter-item expanded "><a href="theming/theming_and_ui.html"><strong aria-hidden="true">3.</strong> Theming &amp; UI</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="theming/working_with_gtk.html"><strong aria-hidden="true">3.1.</strong> Working With GTK</a></li><li class="chapter-item expanded "><a href="theming/styling_widgets.html"><strong aria-hidden="true">3.2.</strong> Styling Widgets</a></li></ol></li><li class="chapter-item expanded "><a href="modules/modules.html"><strong aria-hidden="true">4.</strong> Modules</a></li><li class="chapter-item expanded "><a href="widgets/widgets.html"><strong aria-hidden="true">5.</strong> Widgets</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="widgets/widgets_and_params.html"><strong aria-hidden="true">5.1.</strong> Widgets &amp; Parameters</a></li><li class="chapter-item expanded "><a href="widgets/props.html"><strong aria-hidden="true">5.2.</strong> Widget Properties</a></li></ol></li><li class="chapter-item expanded "><a href="examples/examples.html"><strong aria-hidden="true">6.</strong> Examples</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="examples/common_layouts.html"><strong aria-hidden="true">6.1.</strong> Common Layouts</a></li><li class="chapter-item expanded "><a href="examples/interactive.html"><strong aria-hidden="true">6.2.</strong> Interactive Widgets</a></li><li class="chapter-item expanded "><a href="examples/theming.html"><strong aria-hidden="true">6.3.</strong> Theming Tricks</a></li></ol></li><li class="chapter-item expanded "><a href="troubleshooting.html"><strong aria-hidden="true">7.</strong> Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -347,7 +347,7 @@ Depending on if you are using X11 or Wayland, some additional properties exist:
     orientation: &quot;horizontal&quot;,
     halign: &quot;center&quot;
   }, [
-    button(#{ onclick: &quot;notify-send 'Hello' 'Hello, ${name}'&quot;, label: &quot;Greet&quot; })
+    button(#{ onclick: `notify-send 'Hello' 'Hello, ${name}'`, label: &quot;Greet&quot; })
   ]);
 };
 </code></pre>
@@ -366,8 +366,7 @@ And this function takes one parameters, called <code>name</code>. The <code>name
 ewwii would not know if it should align them vertically or horizontally, how it should space them, and so on.
 Thus, we wrap multiple children in a <code>box</code>.
 This box then contains a button.
-In that button's <code>onclick</code> property, we refer to the provided <code>name</code> using string-interpolation syntax: <code>&quot;${name}&quot;</code>.
-This allows us to easily refer to any variables within strings.</p>
+In that button's <code>onclick</code> property, we refer to the provided <code>name</code> using string-interpolation syntax: <code>`${name}`</code>. It is not possible to use a variable within a <code>&quot;&quot;</code> or <code>''</code> just like javascript. You can learn more about it <a href="https://rhai.rs/book/ref/strings-chars.html?interpolation#string-interpolation">here</a>.</p>
 <!-- TODO -->
 <!-- In fact, there is a lot more you can do within `${...}` - more on that in the chapter about the [expression language](expression_language.md). -->
 <p>To then use our widget, we call the function that provides the widget with the necessary parameters passed.</p>
@@ -438,7 +437,7 @@ ewwii open my_bar --screen 1 --id secondary
 // Then, inside your widget, you can use
 box(#{}, [
   for entry in my_array {
-    button(#{ onclick: &quot;notify-send 'click' 'button ${entry}'&quot;, label: entry.to_string() })
+    button(#{ onclick: `notify-send 'click' 'button ${entry}'`, label: entry.to_string() })
   }
 ])
 </code></pre>
@@ -533,7 +532,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
   }, [
     // the `[]` holds a button which is the child widget of the box widget
     // each element in a `[]` should end in a comma (,) instead of a semi-colon (;).
-    button(#{ onclick: &quot;notify-send '${foo}'&quot;, label: &quot;baz&quot; }),
+    button(#{ onclick: `notify-send '${foo}'`, label: &quot;baz&quot; }),
     label(#{ text: &quot;example&quot; }),
   ]);
 };
@@ -548,7 +547,7 @@ This launches a separate instance of the ewwii daemon that has separate logs and
     halign: &quot;center&quot;
   }, [
     // properties are assigned to both button and label using the #{}.
-    button(#{ onclick: &quot;notify-send '${foo}'&quot;, label: &quot;baz&quot; }),
+    button(#{ onclick: `notify-send '${foo}'`, label: &quot;baz&quot; }),
     label(#{ text: &quot;example&quot; }),
   ]);
 };
@@ -628,6 +627,80 @@ fn wont_work() {
 <blockquote>
 <p>[!NOTE]
 test</p>
+</blockquote>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="the-rhai-expression-engine"><a class="header" href="#the-rhai-expression-engine">The Rhai Expression Engine</a></h1>
+<p>Ewwii uses <a href="https://rhai.rs/">Rhai</a> as its core expression and scripting engine. This means your configuration is more than just static values or simple substitutions—it’s <strong>real code</strong>, and you can use it anywhere dynamic behavior is needed.</p>
+<p>Rhai expressions can:</p>
+<ul>
+<li>Perform logic and branching (<code>if</code>, <code>match</code>, <code>? :</code>)</li>
+<li>Handle mathematical calculations and string operations</li>
+<li>Access nested data from arrays, maps, or JSON</li>
+<li>Run custom functions</li>
+<li>Be used directly in layout definitions, widget attributes, and style rules</li>
+</ul>
+<p>Unlike Yuck, where expressions were embedded in <code>{ ... }</code> or <code>${ ... }</code>, Rhai treats expressions as <strong>native</strong>. They don’t need to be wrapped in special delimiters. If you can write it in Rhai, it just works.</p>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<pre><code class="language-rust ignore">let value = 12 + foo * 10;
+
+box(#{
+  class: &quot;baz&quot;
+  orientation: &quot;h&quot;,
+}, [
+  button(#{
+    class: button_active ? &quot;active&quot; : &quot;inactive&quot;,
+    on_click: &quot;toggle_thing&quot;,
+    label: `Some math: ${value}`,
+  }),
+]);
+</code></pre>
+<h2 id="core-features"><a class="header" href="#core-features">Core Features</a></h2>
+<p>Rhai supports a wide range of expression capabilities:</p>
+<ul>
+<li><strong>Mathematics</strong>: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code></li>
+<li><strong>Comparisons</strong>: <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></li>
+<li><strong>Boolean logic</strong>: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code></li>
+<li><strong>Conditionals</strong>: <code>if/else</code>, ternary (<code>cond ? a : b</code>)</li>
+<li><strong>Regex matching</strong>: <code>=~</code> operator (Rust-style regex)</li>
+<li><strong>Optional access</strong>: <code>?.</code> and <code>?.[index]</code></li>
+<li><strong>Data structures</strong>: maps/arrays (<code>obj.field</code>, <code>arr[3]</code>, <code>map[&quot;key&quot;]</code>)</li>
+<li><strong>Function calls</strong>: standard and Ewwii-specific built-ins (see below)</li>
+<li><strong>String interpolation</strong>: <code>`Value is ${value}`</code> (standard Rhai feature)</li>
+</ul>
+<blockquote>
+<p>Note</p>
+<hr />
+<p>Rhai only allows string interpolation only for the strings that are quoted in `` similar to JavaScript.</p>
+<blockquote>
+<p>Learn more about it <a href="https://rhai.rs/book/ref/strings-chars.html?interpolation#string-interpolation">here</a>.</p>
+</blockquote>
+</blockquote>
+<h2 id="common-built-in-functions"><a class="header" href="#common-built-in-functions">Common Built-in Functions</a></h2>
+<p>💡 <em>You may recognize some of these from the old expression system—but now they're just Rhai functions.</em></p>
+<p>Examples include:</p>
+<ul>
+<li><code>round()</code>, <code>floor()</code>, <code>ceil()</code>, <code>powi()</code>, <code>powf()</code></li>
+<li><code>min()</code>, <code>max()</code>, <code>sin()</code>, <code>cos()</code>, etc.</li>
+<li><code>replace()</code>, <code>matches()</code>, <code>captures()</code></li>
+<li><code>strlength()</code>, <code>arraylength()</code>, <code>objectlength()</code></li>
+<li><code>jq()</code> – run jaq-compatible filters on JSON data</li>
+<li><code>get_env()</code> – read environment variables</li>
+<li><code>formattime()</code> – format UNIX timestamps</li>
+<li><code>formatbytes()</code> – format file sizes (IEC or SI)</li>
+</ul>
+<h2 id="dynamic-usage"><a class="header" href="#dynamic-usage">Dynamic Usage</a></h2>
+<p>Because expressions are just Rhai, you can now write real logic inline or break it into reusable functions:</p>
+<pre><code class="language-rhai">fn status_text(active) {
+  return active ? &quot;enabled&quot; : &quot;disabled&quot;;
+}
+
+label({
+  text: &quot;Status: ${status_text(system_active)}&quot;
+});
+</code></pre>
+<hr />
+<h3 id="tldr"><a class="header" href="#tldr">TL;DR</a></h3>
+<blockquote>
+<p>If you’ve used scripting languages like JavaScript or Lua, you’ll feel at home. Rhai gives you real control—not just interpolation tricks.</p>
 </blockquote>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="theming--ui"><a class="header" href="#theming--ui">Theming &amp; UI</a></h1>
 <p>This section focuses on visual styling and user interface customization. The core visual layer is built atop GTK, allowing deep integration with system themes while also enabling custom overrides through SCSS-style syntax.</p>
