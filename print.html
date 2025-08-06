@@ -448,10 +448,16 @@ In many cases, this can be used instead of <code>literal</code>, and should most
 <h2 id="splitting-up-your-configuration"><a class="header" href="#splitting-up-your-configuration">Splitting up your configuration</a></h2>
 <p>As time passes, your configuration might grow larger and larger. Luckily, you can easily split up your configuration into multiple files!</p>
 <p>There are two options to achieve this:</p>
-<h3 id="using-include"><a class="header" href="#using-include">Using <code>include</code></a></h3>
-<pre><code class="language-rust ignore">include(&quot;./path/to/your/file.rhai&quot;);
+<h3 id="using-importexport"><a class="header" href="#using-importexport">Using <code>import/export</code></a></h3>
+<pre><code class="language-rust ignore">// in ./foo/baz.rhai
+fn greet() { return &quot;Greetings!&quot; }
+export greet;
+
+// in ./ewwii.rhai
+import &quot;foo/baz&quot; as example;
+print(example::greet()); // output: Greetings!
 </code></pre>
-<p>A single rhai file may import the contents of any other rhai file. For this, make use of the <code>include</code> directive.</p>
+<p>A rhai file may import the contents of any other rhai file that they export. For this, make use of the <code>import</code> directive. If you are exporting a variable/function, make use the <code>export</code> directive.</p>
 <h3 id="using-a-separate-ewwii-configuration-directory"><a class="header" href="#using-a-separate-ewwii-configuration-directory">Using a separate ewwii configuration directory</a></h3>
 <p>If you want to separate different widgets even further, you can create a new ewwii config folder anywhere else.
 Then, you can tell ewwii to use that configuration directory by passing <em>every</em> command the <code>--config /path/to/your/config/dir</code> flag.
